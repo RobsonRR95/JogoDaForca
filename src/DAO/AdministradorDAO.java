@@ -3,7 +3,7 @@ import Modelo.Administrador;
 
 // @author Robson Rosa
 
-public class AdministradorDAO {
+public class AdministradorDAO implements DAO{
     
     
     

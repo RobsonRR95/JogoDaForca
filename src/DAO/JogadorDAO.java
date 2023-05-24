@@ -3,7 +3,7 @@ import Modelo.Jogador;
 
 // @author Robson Rosa
 
-public class JogadorDAO {
+public class JogadorDAO implements DAO {
     
     
     

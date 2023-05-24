@@ -6,12 +6,12 @@ import javax.swing.*;
 
 public class Console {
     
-    public String input (String mensagem){
+    public static String input (String mensagem){
         String s = JOptionPane.showInputDialog(null, mensagem);
         return s;
     }
     
-    public void output (String mensagem, int tipoMensagem){
+    public static void output (String mensagem, int tipoMensagem){
          switch (tipoMensagem){
             case 0: JOptionPane.showMessageDialog(null, mensagem);
                 break;

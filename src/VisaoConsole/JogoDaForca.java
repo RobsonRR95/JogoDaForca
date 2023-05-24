@@ -6,9 +6,12 @@ import Modelo.Palavra;
 public class JogoDaForca {
     public static void main(String[] args) {
         
-        Palavra p = new Palavra(EnumDificuldade.FAC, "AMOR");
-        System.out.println(p);
-
+        
+        //Como pegar do usuario com Console 
+        String nome = Console.input("Digite o Nome");
+        String dif = Console.input("Digite a dificuldade:");
+        Palavra p = new Palavra(EnumDificuldade.dif, nome);
+        
 
     }
 }
