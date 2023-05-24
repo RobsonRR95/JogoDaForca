@@ -3,13 +3,13 @@ package Modelo;
 // @author Robson Rosa
 
 public enum EnumDificuldade {
-    FAC, MED, DIF;
+    F, M, D;
     
     public String getDescricao() {
         switch(this) {
-            case FAC: return "Facil";
-            case MED: return "Medio";
-            case DIF: return "Dificil";
+            case F: return "Facil";
+            case M: return "Medio";
+            case D: return "Dificil";
             default : return "";
         }
     }

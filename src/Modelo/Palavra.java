@@ -29,6 +29,10 @@ public class Palavra {
     public void setPalavra(String palavra) {
         this.palavra = palavra;
     }
+
+    public int getQuantidadeDeLetras() {
+        return quantidadeDeLetras;
+    }
     
     
 }
