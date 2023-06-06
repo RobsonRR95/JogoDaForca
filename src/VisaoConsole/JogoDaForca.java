@@ -9,10 +9,7 @@ public class JogoDaForca {
     
     public static void main(String[] args) {
         
-        inicializar();
-        
-        
-
+        cadastrarPalarva();
     }
     
     public static void cadastrarPalarva(){
