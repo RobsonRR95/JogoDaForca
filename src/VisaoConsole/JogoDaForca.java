@@ -1,18 +1,24 @@
 package VisaoConsole;
 import Modelo.EnumDificuldade;
 import Modelo.Palavra;
+import static VisaoConsole.Console.output;
+import static VisaoConsole.Console.opcao;
 
 // @author Robson Rosa
 
 public class JogoDaForca {
-  
     
     public static void main(String[] args) {
-        
-        cadastrarPalarva(); //teste git com personal token
+        bemVindo();
     }
     
-    public static void cadastrarPalarva(){
+    public static void bemVindo(){
+        output("Seja bem vindo ao Jogo da Forca!", 3);
+        if(opcao == 0) output("Você escolheu Jogar!", 0);
+        else output("Você escolheu Sair!", 2);
+    }
+    
+    /*public static void cadastrarPalavra(){ //funcao para cadastro de palavras novas pelos administradores
         String palavra = Console.input("Digite a Palavra");
         String dificuldade = Console.input("1 - " + EnumDificuldade.F.getDescricao() +
                                            "\n2 - " + EnumDificuldade.M.getDescricao() + 
@@ -32,12 +38,10 @@ public class JogoDaForca {
         }
         
     }   
-    
-    public static void inicializar(){
-        Console.output("Inicializar", 0);
-    }
-    
+        
     public static void cadastrarAdministrador(){
         Console.output("cadastrarAdministrador", 0);
     }
+*/
+    
 }
