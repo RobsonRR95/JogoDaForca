@@ -15,7 +15,7 @@ public class JogoDaForca {
     public static void bemVindo(){
         output("Seja bem vindo ao Jogo da Forca!", 3);
         if(opcao == 0) output("Você escolheu Jogar!", 0);
-        else output("Você escolheu Sair!", 2);
+        else output("Você escolheu Sair!", 3);
     }
     
     /*public static void cadastrarPalavra(){ //funcao para cadastro de palavras novas pelos administradores
