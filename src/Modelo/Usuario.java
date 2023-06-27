@@ -4,37 +4,22 @@ package Modelo;
 
 public class Usuario {
     
-    static int cont;
-    //colocar private ou protectd em id
-    int id;
-    private String login;
-    private String senha;
-    private String nome;
-    private String tipo;
 
-    public Usuario(String login, String senha, String nome) {
-        id = cont++;
-        this.login = login;
-        this.senha = senha;
+    private int id;
+    private String nome;
+    private int senha;
+    private int tipo;
+
+    public Usuario(String nome, int senha, int tipo) {
         this.nome = nome;
+        this.senha = senha;
+        this.tipo = tipo;
+    }
+    
+    public int getID() {
+        return id;
     }
    
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -42,6 +27,22 @@ public class Usuario {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public int getSenha() {
+        return senha;
+    }
+
+    public void setSenha(int senha) {
+        this.senha = senha;
+    } 
     
-    // fazer toString aq
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
+    // TODO: fazer toString aq (Robson)
 }

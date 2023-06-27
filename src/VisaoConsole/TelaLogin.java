@@ -163,7 +163,7 @@ public class TelaLogin extends javax.swing.JFrame {
                 TelaMenu telaMenu = new TelaMenu(usuarioLogado);
                 telaMenu.setVisible(true);
                 this.setVisible(false);
-//                dispose(); // Fecha a tela atual para abrir a próxima
+                // dispose(); // Fecha a tela atual para abrir a próxima
                 
             } else {
                 // Login inválido
