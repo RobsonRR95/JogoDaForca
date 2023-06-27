@@ -4,6 +4,7 @@ package Modelo;
 
 public class Jogador extends Usuario{
     
+    //TODO: fazer isso
     private int pontuacao;
     
     public Jogador(String login, String senha, String nome) {

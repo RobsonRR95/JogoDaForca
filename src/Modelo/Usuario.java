@@ -10,6 +10,7 @@ public class Usuario {
     private String login;
     private String senha;
     private String nome;
+    private String tipo;
 
     public Usuario(String login, String senha, String nome) {
         id = cont++;
