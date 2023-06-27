@@ -1,4 +1,4 @@
-BD já tá configurado no código e no projeto.
+BD já tá configurado no código e no projeto. Talvez só precise adicionar a biblioteca que é o arquivo jar dessa pasta.
 
 Só instalar o XAMPP (server) e HeidiSQL (sgbd) e startar o mysql. Abre o .sql com o sgbd que ele já cria o banco.
 
