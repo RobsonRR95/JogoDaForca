@@ -20,10 +20,15 @@ public class TelaMenu extends javax.swing.JFrame {
     /**
      * Creates new form TelaMenu
      */
-    public TelaMenu() {
+    
+
+    private final String usuarioLogado; // Variável que recebe o usuario logado
+    
+    public TelaMenu(String usuario) {
+        this.usuarioLogado = usuario;
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -120,25 +125,26 @@ public class TelaMenu extends javax.swing.JFrame {
         Connection connection = DriverManager.getConnection(url, username, password);
         
         // Prepara a consulta SQL
-        String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+        String query = "SELECT * FROM administrador WHERE nome = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, usuario);
+        statement.setString(1, usuarioLogado);
         
         // Executa a consulta SQL
         ResultSet resultSet = statement.executeQuery();
+        JOptionPane.showMessageDialog(this, usuarioLogado);
         
         // Verificar se a consulta retornou algum resultado
             if (resultSet.next()) {
                 // Login válido
-                JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
                 // Chama a próxima tela
-                TelaMenu telaMenu = new TelaMenu();
-                telaMenu.setVisible(true);
-                dispose();
+//                TelaMenu telaMenu = new TelaMenu();
+//                telaMenu.setVisible(true);
+//                dispose();
+                
                 
             } else {
                 // Login inválido
-                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos. Tente novamente.");
+                JOptionPane.showMessageDialog(this, "Você não é um administrador!");
             }
         }
         
@@ -178,7 +184,7 @@ public class TelaMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaMenu().setVisible(true);
+               //new TelaMenu().setVisible(true);
             }
         });
     }

@@ -21,6 +21,9 @@ public class TelaLogin extends javax.swing.JFrame {
     /**
      * Creates new form TelaCadastro
      */
+    
+    private String usuarioLogado; // Variável para passar o nome do usuário para próxima tela
+    
     public TelaLogin() {
         initComponents();
     }
@@ -151,10 +154,13 @@ public class TelaLogin extends javax.swing.JFrame {
             if (resultSet.next()) {
                 // Login válido
                 JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
+                
+                usuarioLogado = usuario;
+                
                 // Chama a próxima tela
-                TelaMenu telaMenu = new TelaMenu();
+                TelaMenu telaMenu = new TelaMenu(usuarioLogado);
                 telaMenu.setVisible(true);
-                dispose();
+                dispose(); // Fecha a tela atual para abrir a próxima
                 
             } else {
                 // Login inválido
@@ -195,17 +201,6 @@ public class TelaLogin extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        
-//        Conexao BD
-//        try{
-//        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
-//        String username = "root";
-//        String password = "admin";
-//        Connection connection = DriverManager.getConnection(url, username, password);
-//        }
-//        catch(SQLException e){
-//        e.printStackTrace();
-//        }
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
