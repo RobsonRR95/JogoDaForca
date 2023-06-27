@@ -4,6 +4,13 @@
  */
 package VisaoConsole;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author santo
@@ -41,6 +48,11 @@ public class TelaMenu extends javax.swing.JFrame {
         btJogar.setText("Jogar");
 
         btCadastroUsuario.setText("Cadastrar Usuário");
+        btCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastroUsuarioActionPerformed(evt);
+            }
+        });
 
         btCadastroPalavra.setText("Cadastrar Palavra");
 
@@ -97,6 +109,44 @@ public class TelaMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroUsuarioActionPerformed
+        // TODO add your handling code here:
+        // Conexao BD
+        try{
+        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
+        String username = "root";
+        String password = "";
+        Connection connection = DriverManager.getConnection(url, username, password);
+        
+        // Prepara a consulta SQL
+        String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, usuario);
+        
+        // Executa a consulta SQL
+        ResultSet resultSet = statement.executeQuery();
+        
+        // Verificar se a consulta retornou algum resultado
+            if (resultSet.next()) {
+                // Login válido
+                JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
+                // Chama a próxima tela
+                TelaMenu telaMenu = new TelaMenu();
+                telaMenu.setVisible(true);
+                dispose();
+                
+            } else {
+                // Login inválido
+                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos. Tente novamente.");
+            }
+        }
+        
+        catch(SQLException e){
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Erro de conexão à base. Reinicie a aplicação.");
+        }
+    }//GEN-LAST:event_btCadastroUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
