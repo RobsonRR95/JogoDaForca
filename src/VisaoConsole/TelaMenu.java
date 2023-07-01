@@ -122,41 +122,41 @@ public class TelaMenu extends javax.swing.JFrame {
 
     private void btCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroUsuarioActionPerformed
         // TODO add your handling code here:
-        // Conexao BD
-        try{
-        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
-        String username = "root";
-        String password = "";
-        Connection connection = DriverManager.getConnection(url, username, password);
-        
-        // Prepara a consulta SQL
-        String query = "SELECT * FROM administrador WHERE nome = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, usuarioLogado.getNome());
-        
-        // Executa a consulta SQL
-        ResultSet resultSet = statement.executeQuery();
-        JOptionPane.showMessageDialog(this, usuarioLogado);
-        
-        // Verificar se a consulta retornou algum resultado
-            if (resultSet.next()) {
-                // Login válido
-                // Chama a próxima tela
-//                TelaMenu telaMenu = new TelaMenu();
-//                telaMenu.setVisible(true);
-//                dispose();
-                
-                
-            } else {
-                // Login inválido
-                JOptionPane.showMessageDialog(this, "Você não é um administrador!");
-            }
-        }
-        
-        catch(SQLException e){
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Erro de conexão à base. Reinicie a aplicação.");
-        }
+//        // Conexao BD
+//        try{
+//        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
+//        String username = "root";
+//        String password = "";
+//        Connection connection = DriverManager.getConnection(url, username, password);
+//        
+//        // Prepara a consulta SQL
+//        String query = "SELECT * FROM administrador WHERE nome = ?";
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        statement.setString(1, usuarioLogado.getNome());
+//        
+//        // Executa a consulta SQL
+//        ResultSet resultSet = statement.executeQuery();
+//        JOptionPane.showMessageDialog(this, usuarioLogado);
+//        
+//        // Verificar se a consulta retornou algum resultado
+//            if (resultSet.next()) {
+//                // Login válido
+//                // Chama a próxima tela
+//                //TelaMenu telaMenu = new TelaMenu();
+//                //telaMenu.setVisible(true);
+//                //dispose();
+//                
+//                
+//            } else {
+//                // Login inválido
+//                JOptionPane.showMessageDialog(this, "Você não é um administrador!");
+//            }
+//        }
+//        
+//        catch(SQLException e){
+//        e.printStackTrace();
+//        JOptionPane.showMessageDialog(this, "Erro de conexão à base. Reinicie a aplicação.");
+//        }
     }//GEN-LAST:event_btCadastroUsuarioActionPerformed
 
 //    /**

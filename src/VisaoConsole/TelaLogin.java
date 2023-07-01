@@ -4,13 +4,15 @@
  */
 package VisaoConsole;
 
+import DAO.UsuarioDAO;
 import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
 
 
 /**
@@ -129,51 +131,40 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_textUsuarioActionPerformed
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
-        // TODO add your handling code here:   
         
-        // Pega os dados digitados pelo usuário
-        String usuario = textUsuario.getText(); 
-        String senha = new String(textSenha.getPassword()); 
-//        usuarioLogado = new Usuario(usuario, senha); 
-// TODO: criar o objeto usuarioLogado 
+        String nome = textUsuario.getText(); 
+        String senha = new String(textSenha.getPassword());
         
-        // Conexao BD
-        try{
-        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
-        String username = "root";
-        String password = "";
-        Connection connection = DriverManager.getConnection(url, username, password);
-        
-        // Prepara a consulta SQL
-        String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, usuario);
-        statement.setString(2, senha);
-        
-        // Executa a consulta SQL
-        ResultSet resultSet = statement.executeQuery();
-        
-        // Verificar se a consulta retornou algum resultado
-            if (resultSet.next()) {
-                // Login válido
-                JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
-               
-                
-                // Chama a próxima tela
-                TelaMenu telaMenu = new TelaMenu(usuarioLogado);
-                telaMenu.setVisible(true);
-                this.setVisible(false);
-                // dispose(); // Fecha a tela atual para abrir a próxima
-                
-            } else {
-                // Login inválido
-                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos. Tente novamente.");
-            }
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        }
+        catch (SQLException ex) {
+            
         }
         
-        catch(SQLException e){
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Erro de conexão à base. Reinicie a aplicação.");
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        boolean booleanLogin = false;
+        
+        try {
+            booleanLogin = usuarioDAO.loginUsuario(nome, senha);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        if (booleanLogin) {
+            // Login válido
+            JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
+               
+            // Chama a próxima tela
+            TelaMenu telaMenu = new TelaMenu(usuarioLogado);
+            telaMenu.setVisible(true);
+            this.setVisible(false); // Só fecha a jela atual
+            // dispose(); // Fecha a tela atual para abrir a próxima, mas limpa tudo
+        }
+        else{
+            // Login inválido
+                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos. Tente novamente.");
         }
     }//GEN-LAST:event_btEntrarActionPerformed
 

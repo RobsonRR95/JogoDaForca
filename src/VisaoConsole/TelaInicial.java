@@ -4,6 +4,11 @@
  */
 package VisaoConsole;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Robson Rosa
@@ -102,7 +107,7 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -126,7 +131,13 @@ public class TelaInicial extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        
+        // Conexão com o banco que será enviada para as classes DAO
+        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
+        String username = "root";
+        String password = "";
+        Connection connection = DriverManager.getConnection(url, username, password);
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -3,46 +3,40 @@ package Modelo;
 // @author Robson Rosa
 
 public class Usuario {
+    private int id, tipo;
+    private String nome, senha;
     
+    // Getters e Setter
 
-    private int id;
-    private String nome;
-    private int senha;
-    private int tipo;
-
-    public Usuario(String nome, int senha, int tipo) {
-        this.nome = nome;
-        this.senha = senha;
-        this.tipo = tipo;
-    }
-    
-    public int getID() {
+    public int getId() { // Retorna ID
         return id;
     }
-   
-    public String getNome() {
-        return nome;
+    
+    public void setId(int id) { // Retorna ID
+        this.id = id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getSenha() {
+    public String getSenha() { // Retorna Senha
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) { // Define a senha
         this.senha = senha;
-    } 
-    
-    public int getTipo() {
+    }
+
+    public int getTipo() { // Retorna Tipo
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(int tipo) { // Define o Tipo
         this.tipo = tipo;
     }
-    
-    // TODO: fazer toString aq (Robson)
+
+    public String getNome() { // Retorna o Nome
+        return nome;
+    }
+
+    public void setNome(String nome) { // Define o nome
+        this.nome = nome;
+    }    
 }
