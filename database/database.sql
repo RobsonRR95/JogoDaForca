@@ -19,31 +19,6 @@
 CREATE DATABASE IF NOT EXISTS `jogo_da_forca` /*!40100 DEFAULT CHARACTER SET armscii8 COLLATE armscii8_bin */;
 USE `jogo_da_forca`;
 
--- Copiando estrutura para tabela jogo_da_forca.administrador
-CREATE TABLE IF NOT EXISTS `administrador` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
-
--- Copiando dados para a tabela jogo_da_forca.administrador: ~0 rows (aproximadamente)
-INSERT INTO `administrador` (`id`, `nome`) VALUES
-	(1, 'Bruno');
-
--- Copiando estrutura para tabela jogo_da_forca.jogador
-CREATE TABLE IF NOT EXISTS `jogador` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `pontuacao` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `jogador_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
-
--- Copiando dados para a tabela jogo_da_forca.jogador: ~0 rows (aproximadamente)
-INSERT INTO `jogador` (`id`, `nome`, `pontuacao`) VALUES
-	(1, 'Bruno', 0);
-
 -- Copiando estrutura para tabela jogo_da_forca.palavras
 CREATE TABLE IF NOT EXISTS `palavras` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -58,13 +33,17 @@ CREATE TABLE IF NOT EXISTS `palavras` (
 CREATE TABLE IF NOT EXISTS `usuario` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NOME` varchar(50) NOT NULL,
-  `SENHA` int(11) NOT NULL,
+  `SENHA` varchar(50) NOT NULL DEFAULT '',
+  `TIPO` int(11) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Copiando dados para a tabela jogo_da_forca.usuario: ~0 rows (aproximadamente)
-INSERT INTO `usuario` (`ID`, `NOME`, `SENHA`) VALUES
-	(1, 'Bruno', 123);
+-- Copiando dados para a tabela jogo_da_forca.usuario: ~2 rows (aproximadamente)
+INSERT INTO `usuario` (`ID`, `NOME`, `SENHA`, `TIPO`) VALUES
+	(1, 'bruno', '123', 1),
+	(2, 'robson', '1234', 2),
+	(3, 'joao', '789', 1),
+	(4, '', '', 2);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
