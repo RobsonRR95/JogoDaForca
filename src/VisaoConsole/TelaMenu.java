@@ -4,12 +4,15 @@
  */
 package VisaoConsole;
 
+import DAO.UsuarioDAO;
 import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,17 +25,12 @@ public class TelaMenu extends javax.swing.JFrame {
      * Creates new form TelaMenu
      */
     
-
-    private final Usuario usuarioLogado; // Variável que recebe o usuario logado
+    private String nick; // Recebe o nickname único do usuário
     
-    public TelaMenu(Usuario usuario) {
-        this.usuarioLogado = usuario;
+    public TelaMenu(String nome) {
         initComponents();
-    }
-    
-    public Usuario getUsuarioLogado(){
-        return usuarioLogado;
-    }
+        nick = nome;
+    }    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,42 +119,35 @@ public class TelaMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btCadastroUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroUsuarioActionPerformed
-        // TODO add your handling code here:
-//        // Conexao BD
-//        try{
-//        String url = "jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo";
-//        String username = "root";
-//        String password = "";
-//        Connection connection = DriverManager.getConnection(url, username, password);
-//        
-//        // Prepara a consulta SQL
-//        String query = "SELECT * FROM administrador WHERE nome = ?";
-//        PreparedStatement statement = connection.prepareStatement(query);
-//        statement.setString(1, usuarioLogado.getNome());
-//        
-//        // Executa a consulta SQL
-//        ResultSet resultSet = statement.executeQuery();
-//        JOptionPane.showMessageDialog(this, usuarioLogado);
-//        
-//        // Verificar se a consulta retornou algum resultado
-//            if (resultSet.next()) {
-//                // Login válido
-//                // Chama a próxima tela
-//                //TelaMenu telaMenu = new TelaMenu();
-//                //telaMenu.setVisible(true);
-//                //dispose();
-//                
-//                
-//            } else {
-//                // Login inválido
-//                JOptionPane.showMessageDialog(this, "Você não é um administrador!");
-//            }
-//        }
-//        
-//        catch(SQLException e){
-//        e.printStackTrace();
-//        JOptionPane.showMessageDialog(this, "Erro de conexão à base. Reinicie a aplicação.");
-//        }
+        
+        // Faz a conexão com o BD
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        }
+        catch (SQLException ex) {
+            
+        }
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        
+        // Try Catch para validar conexão com o BD
+        try {
+            Usuario usuarioRecuperado = usuarioDAO.recuperar(nick); // Pegar o nick do usuário logado
+            int tipoUsuario = usuarioRecuperado.getTipo(); // Pega o tipo para validar se é administrador ou  não
+            if(tipoUsuario == 1){
+                //JOptionPane.showMessageDialog(this, "Você é o: " + nick);
+                TelaCadastroUsuario telaCadastroUsuario = new TelaCadastroUsuario();
+                telaCadastroUsuario.setVisible(true);
+                //this.setVisible(false); // Desativei provisório, não consegui remover, já que a TelaMenu precisa ser chamada com a entrega do nome.
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Você não é um administrador! Permissão negada."); // Else caso o usuário não seja administrador.
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btCadastroUsuarioActionPerformed
 
 //    /**

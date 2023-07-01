@@ -35,6 +35,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btJogar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btSair = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +55,8 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Desenvolvido por Bruno Santos e Robson Rosa");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -65,6 +68,10 @@ public class TelaInicial extends javax.swing.JFrame {
                     .addComponent(btJogar)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
                 .addGap(250, 250, 250))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(171, 171, 171))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -75,7 +82,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(btJogar)
                 .addGap(18, 18, 18)
                 .addComponent(btSair)
-                .addContainerGap(141, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,6 +147,8 @@ public class TelaInicial extends javax.swing.JFrame {
         String password = "";
         Connection connection = DriverManager.getConnection(url, username, password);
         
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -150,6 +161,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btJogar;
     private javax.swing.JButton btSair;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

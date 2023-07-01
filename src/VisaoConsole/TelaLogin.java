@@ -25,7 +25,8 @@ public class TelaLogin extends javax.swing.JFrame {
      * Creates new form TelaCadastro
      */
     
-    private Usuario usuarioLogado; // Variável para passar o nome do usuário para próxima tela
+
+    Usuario usuarioLogado; // Variável para passar o nome do usuário para próxima tela
     
     public TelaLogin() {
         initComponents();
@@ -52,9 +53,17 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Jogo da Forca");
 
+        textUsuario.setText("bruno");
         textUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textUsuarioActionPerformed(evt);
+            }
+        });
+
+        textSenha.setText("123");
+        textSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textSenhaActionPerformed(evt);
             }
         });
 
@@ -65,16 +74,16 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Usuário");
+        jLabel2.setText("Nickname:");
 
-        jLabel3.setText("Senha");
+        jLabel3.setText("Senha:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
+                .addContainerGap(148, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -155,9 +164,10 @@ public class TelaLogin extends javax.swing.JFrame {
         if (booleanLogin) {
             // Login válido
             JOptionPane.showMessageDialog(this, "Login válido. Bem-vindo!");
-               
+            
             // Chama a próxima tela
-            TelaMenu telaMenu = new TelaMenu(usuarioLogado);
+            //Usuario usuarioLogado = loginUsuario(nome);
+            TelaMenu telaMenu = new TelaMenu(nome);
             telaMenu.setVisible(true);
             this.setVisible(false); // Só fecha a jela atual
             // dispose(); // Fecha a tela atual para abrir a próxima, mas limpa tudo
@@ -167,6 +177,10 @@ public class TelaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos. Tente novamente.");
         }
     }//GEN-LAST:event_btEntrarActionPerformed
+
+    private void textSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textSenhaActionPerformed
 
 //    /**
 //     * @param args the command line arguments
