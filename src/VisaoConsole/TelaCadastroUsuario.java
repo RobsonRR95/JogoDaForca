@@ -9,6 +9,8 @@ import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -164,25 +166,42 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         String combo = (String) comboTipo.getSelectedItem(); // Faz o cast da seleção para String
         
         if(combo.equals("Administrador")){
-            tipo = 1;
+            tipo = 1; // Tipo 1 = Administrador
         }
         else{
-            tipo = 2;
+            tipo = 2; // Tipo 2 = Jogador
         }
         
-        Usuario usuario = new Usuario();
-        usuario.setNome(nome);
-        usuario.setSenha(senha);
-        usuario.setTipo(tipo);
-        
-        // Chamar o método inserirUsuario passando o objeto Usuario como argumento
-        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
-        try { //TODO: ajustar para não exibir mensagem quando o nickname já existir
-            usuarioDAO.inserirUsuario(usuario);
-            JOptionPane.showMessageDialog(this, "Usuário inserido com sucesso!");
-            dispose();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Erro ao inserir usuário: " + e.getMessage());
+        if(nome.equals("") || senha.equals("")){ // Verifica se ambos campos estão preenchidos
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+        }
+        else{
+            // Chamar o método inserirUsuario passando o objeto Usuario como argumento
+            UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+            
+            try {
+                if(usuarioDAO.existeUsuario(nome)){ // Chama o método e caso retorne true avisa que Nickmane já existe
+                    JOptionPane.showMessageDialog(null, "Nickname não disponível! Escolha outro.");
+                }
+                else{ // Se o nickmane não existir, cadastra o usuário
+                    Usuario usuario = new Usuario();
+                    usuario.setNome(nome);
+                    usuario.setSenha(senha);
+                    usuario.setTipo(tipo);
+                
+                    try {
+                        usuarioDAO.inserirUsuario(usuario);
+                        JOptionPane.showMessageDialog(this, "Usuário inserido com sucesso!");
+                        dispose();
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(this, "Erro ao inserir usuário: " + e.getMessage());
+                    }  
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           
         }
         
     }//GEN-LAST:event_btSalvarActionPerformed

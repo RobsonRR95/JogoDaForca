@@ -67,6 +67,11 @@ public class TelaMenu extends javax.swing.JFrame {
         btRanking.setText("Ranking");
 
         btListaJogadores.setText("Listar Jogadores");
+        btListaJogadores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btListaJogadoresActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,6 +154,11 @@ public class TelaMenu extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btCadastroUsuarioActionPerformed
+
+    private void btListaJogadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaJogadoresActionPerformed
+        TelaListarUsuario telaListarUsuario = new TelaListarUsuario();
+        telaListarUsuario.setVisible(true);
+    }//GEN-LAST:event_btListaJogadoresActionPerformed
 
 //    /**
 //     * @param args the command line arguments

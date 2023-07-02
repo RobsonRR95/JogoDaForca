@@ -24,12 +24,6 @@ public class UsuarioDAO {
     
     // Recebe os dados para criação de um novo usuário
     public void inserirUsuario(Usuario usuario) throws SQLException {
-        // Verificar se já existe um usuário com o mesmo nome
-        if (existeUsuario(usuario.getNome())) {
-            JOptionPane.showMessageDialog(null, "Nickname não disponível! Escolha outro.");
-            return; // Retorna sem inserir o novo usuário
-        }
-
         String query = "INSERT INTO usuario (nome, senha, tipo) VALUES (?, ?, ?)"; // Query para inserir um novo usuário
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, usuario.getNome());
@@ -37,8 +31,19 @@ public class UsuarioDAO {
         statement.setInt(3, usuario.getTipo());
         statement.executeUpdate();
     }
+    
+    public void listarUsuario(Usuario usuario) throws SQLException {
+        String query = "SELECT id, nome FROM usuario WHERE tipo = 2"; // Query para inserir um novo usuário
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery(query);
+        
+        while(resultSet.next()){
+            int id = resultSet.getInt("id");
+            String nome = resultSet.getString("nome");
+        }
+    }    
 
-    private boolean existeUsuario(String nome) throws SQLException {
+    public boolean existeUsuario(String nome) throws SQLException {
         String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, nome);
