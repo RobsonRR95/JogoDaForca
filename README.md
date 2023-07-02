@@ -8,7 +8,7 @@ Instruções de conexão:
 1.  Para clonar o projeto para seu NetBeans IDE siga os passos desse video: https://youtu.be/QL_HQK1on0w?t=250
     
     * Link no projeto: https://github.com/RobsonRR95/JogoDaForca.git
-    * Para dar serto o seu IDE precisa esta sem nenhum projeto aberto.
+    * Para dar certo o seu IDE precisa esta sem nenhum projeto aberto.
     * Na parte que fala que é para criar um projeto novo vai aparecer para abrir o projeto. Já vai estar tudo ok.
 
 
