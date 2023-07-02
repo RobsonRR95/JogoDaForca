@@ -63,6 +63,11 @@ public class TelaMenu extends javax.swing.JFrame {
         });
 
         btCadastroPalavra.setText("Cadastrar Palavra");
+        btCadastroPalavra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastroPalavraActionPerformed(evt);
+            }
+        });
 
         btRanking.setText("Ranking");
 
@@ -160,6 +165,36 @@ public class TelaMenu extends javax.swing.JFrame {
         telaListarUsuario = new TelaListarUsuario();
         telaListarUsuario.setVisible(true);
     }//GEN-LAST:event_btListaJogadoresActionPerformed
+
+    private void btCadastroPalavraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastroPalavraActionPerformed
+        // Faz a conexão com o BD
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        }
+        catch (SQLException ex) {
+            
+        }
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        
+        // Try Catch para validar conexão com o BD
+        try {
+            Usuario usuarioRecuperado = usuarioDAO.recuperar(nick); // Pegar o nick do usuário logado
+            int tipoUsuario = usuarioRecuperado.getTipo(); // Pega o tipo para validar se é administrador ou  não
+            if(tipoUsuario == 1){
+                //JOptionPane.showMessageDialog(this, "Você é o: " + nick);
+                TelaCadastroPalavra telaCadastroPalavra = new TelaCadastroPalavra();
+                telaCadastroPalavra.setVisible(true);
+                //this.setVisible(false); // Desativei provisório, não consegui remover, já que a TelaMenu precisa ser chamada com a entrega do nome.
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Você não é um administrador! Permissão negada."); // Else caso o usuário não seja administrador.
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btCadastroPalavraActionPerformed
 
 //    /**
 //     * @param args the command line arguments
