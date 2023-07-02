@@ -5,7 +5,17 @@ package Modelo;
 public class Usuario {
     private int id, tipo;
     private String nome, senha;
+
+//    public Usuario() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
+//    public Usuario(int id, String nome) {
+//        this.id = id;
+//        this.nome = nome;
+//        throw new UnsupportedOperationException("Not supported yet in publicUsuario(int id, String nome)."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+  
     // Getters e Setter
 
     public int getId() { // Retorna ID

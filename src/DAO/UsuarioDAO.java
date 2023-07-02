@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 /**
  *
@@ -32,16 +34,34 @@ public class UsuarioDAO {
         statement.executeUpdate();
     }
     
-    public void listarUsuario(Usuario usuario) throws SQLException {
-        String query = "SELECT id, nome FROM usuario WHERE tipo = 2"; // Query para inserir um novo usuário
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery(query);
-        
-        while(resultSet.next()){
-            int id = resultSet.getInt("id");
-            String nome = resultSet.getString("nome");
-        }
-    }    
+//    public void listarUsuario() throws SQLException {
+//        String query = "SELECT id, nome FROM usuario"; // Query para inserir um novo usuário
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        ResultSet resultSet = statement.executeQuery(query);
+//        
+//        while(resultSet.next()){
+//            int id = resultSet.getInt("id");
+//            String nome = resultSet.getString("nome");
+//        }
+//    }    
+    
+//    public List<Usuario> listarUsuario() throws SQLException {
+//    String query = "SELECT id, nome FROM usuario"; // Query para retornar os usuários
+//    PreparedStatement statement = connection.prepareStatement(query);
+//    ResultSet resultSet = statement.executeQuery();
+//    
+//    List<Usuario> usuarios = new ArrayList<>();
+//    
+//    while(resultSet.next()){
+//        int id = resultSet.getInt("id");
+//        String nome = resultSet.getString("nome");
+//        
+//        Usuario usuario = new Usuario(id, nome);
+//        usuarios.add(usuario);
+//    }
+//    
+//    return usuarios;
+//    }
 
     public boolean existeUsuario(String nome) throws SQLException {
         String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";

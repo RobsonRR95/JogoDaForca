@@ -9,6 +9,7 @@ import Modelo.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,7 +29,9 @@ public class TelaLogin extends javax.swing.JFrame {
 
     Usuario usuarioLogado; // Variável para passar o nome do usuário para próxima tela
     
-    public TelaLogin() {
+    
+    
+    public TelaLogin() throws SQLException {
         initComponents();
     }
 

@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -103,7 +105,12 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
         // Botão de Jogar.
-        TelaLogin telaLogin = new TelaLogin();
+        TelaLogin telaLogin = null;
+        try {
+            telaLogin = new TelaLogin();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
         telaLogin.setVisible(true);
         dispose();
     }//GEN-LAST:event_btJogarActionPerformed
@@ -146,8 +153,6 @@ public class TelaInicial extends javax.swing.JFrame {
         String username = "root";
         String password = "";
         Connection connection = DriverManager.getConnection(url, username, password);
-        
-        
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
