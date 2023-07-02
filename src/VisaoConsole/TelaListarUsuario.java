@@ -4,9 +4,16 @@
  */
 package VisaoConsole;
 
+import Modelo.Usuario;
+import DAO.UsuarioDAO;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -17,37 +24,38 @@ public class TelaListarUsuario extends javax.swing.JFrame {
     /**
      * Creates new form TelaListarUsuario
      */
+    
+    private final Connection connection;
+    private DefaultTableModel modeloTabela; // Declaração do campo modeloTabela
 
-    public TelaListarUsuario(){        
-//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
-//        UsuarioDAO usuarioDAO = new UsuarioDAO(connection); // Cria uma instância de UsuarioDAO passando a conexão como parâmetro
-//        // Obtenha a lista de usuários chamando a função listarUsuario()
-//        List<Usuario> usuarios;
-//        usuarios = usuarioDAO.listarUsuario();
-//        
-//        try {
-//            usuarios = usuarioDAO.listarUsuario(); // Chama o método listarUsuario() da instância de UsuarioDAO
-//            // Verifica se a lista de usuários está vazia
-//            if (!usuarios.isEmpty()) {
-//                // Cria um modelo de tabela personalizado com base na lista de usuários
-//                model = new javax.swing.table.DefaultTableModel(
-//                    new Object [][] {
-//                        {1, "Bruno"}//{usuarios.get(1).getId(), usuarios.get(1).getNome()},
-//                    },
-//                    new String [] {
-//                        "ID", "Nome"
-//                    }
-//                );
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Nenhum usuário cadastrado!"); // Else caso o usuário não seja administrador.
-//            }    
-//        } catch (SQLException e) {
-//            // Trata a exceção
-//            e.printStackTrace();
-//            usuarios = new ArrayList<>(); // Cria uma lista vazia em caso de erro
-//        }
+    
+    public TelaListarUsuario() throws SQLException {        
+        // Código para personalização da tabela
+        // Crie o modelo de tabela personalizado
+        DefaultTableModel modeloTabela = new DefaultTableModel();
+
+        // Defina as colunas da tabela
+        modeloTabela.addColumn("ID");
+        modeloTabela.addColumn("Nome");
+        modeloTabela.addColumn("Pontuação");
+
+        // Obtenha a lista de usuários do tipo 2
+        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        ArrayList<Usuario> usuariosTipo2 = usuarioDAO.getUsuariosTipo2();
+
+        // Adicione cada usuário como uma linha na tabela
+        for (Usuario usuario : usuariosTipo2) {
+            Object[] rowData = {usuario.getId(), usuario.getNome(), usuario.getPontuacao()};
+            modeloTabela.addRow(rowData);
+        }
+        
         initComponents();
+        
+        // Atribua o modelo de tabela personalizado à tabela
+        tableUsuario.setModel(modeloTabela);
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,6 +68,8 @@ public class TelaListarUsuario extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btVoltar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableUsuario = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,19 +80,27 @@ public class TelaListarUsuario extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(tableUsuario);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(205, 205, 205)
+                .addGap(209, 209, 209)
                 .addComponent(btVoltar)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(341, 341, 341)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btVoltar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -135,7 +153,11 @@ public class TelaListarUsuario extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaListarUsuario().setVisible(true);
+                try {
+                    new TelaListarUsuario().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaListarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -143,5 +165,7 @@ public class TelaListarUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btVoltar;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableUsuario;
     // End of variables declaration//GEN-END:variables
 }

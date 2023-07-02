@@ -162,7 +162,11 @@ public class TelaMenu extends javax.swing.JFrame {
 
     private void btListaJogadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListaJogadoresActionPerformed
         TelaListarUsuario telaListarUsuario = null;
-        telaListarUsuario = new TelaListarUsuario();
+        try {
+            telaListarUsuario = new TelaListarUsuario();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         telaListarUsuario.setVisible(true);
     }//GEN-LAST:event_btListaJogadoresActionPerformed
 

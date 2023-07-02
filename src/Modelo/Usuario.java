@@ -3,18 +3,19 @@ package Modelo;
 // @author Robson Rosa
 
 public class Usuario {
-    private int id, tipo;
+    private int id, tipo, pontuacao;
     private String nome, senha;
 
-//    public Usuario() {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
-    
-//    public Usuario(int id, String nome) {
-//        this.id = id;
-//        this.nome = nome;
-//        throw new UnsupportedOperationException("Not supported yet in publicUsuario(int id, String nome)."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
+ // Construtor sem parâmetros
+    public Usuario() {
+    }
+
+    // Construtor com parâmetros
+    public Usuario(int id, String nome, int pontuacao) {
+        this.id = id;
+        this.nome = nome;
+        this.pontuacao = pontuacao;
+    }
   
     // Getters e Setter
 
@@ -49,4 +50,8 @@ public class Usuario {
     public void setNome(String nome) { // Define o nome
         this.nome = nome;
     }    
+
+    public Object getPontuacao() {
+        return pontuacao;
+    }
 }

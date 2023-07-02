@@ -5,7 +5,9 @@
 package DAO;
 
 import Modelo.Usuario;
+import com.mysql.cj.xdevapi.Statement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,45 +25,22 @@ public class UsuarioDAO {
     public UsuarioDAO(Connection connection){
         this.connection = connection;
     }
+
+    public UsuarioDAO(com.sun.jdi.connect.spi.Connection connection) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
     // Recebe os dados para criação de um novo usuário
     public void inserirUsuario(Usuario usuario) throws SQLException {
-        String query = "INSERT INTO usuario (nome, senha, tipo) VALUES (?, ?, ?)"; // Query para inserir um novo usuário
+        String query = "INSERT INTO usuario (nome, senha, tipo, pontuacao) VALUES (?, ?, ?, 0)"; // Query para inserir um novo usuário
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, usuario.getNome());
         statement.setString(2, usuario.getSenha());
         statement.setInt(3, usuario.getTipo());
         statement.executeUpdate();
-    }
+    } 
     
-//    public void listarUsuario() throws SQLException {
-//        String query = "SELECT id, nome FROM usuario"; // Query para inserir um novo usuário
-//        PreparedStatement statement = connection.prepareStatement(query);
-//        ResultSet resultSet = statement.executeQuery(query);
-//        
-//        while(resultSet.next()){
-//            int id = resultSet.getInt("id");
-//            String nome = resultSet.getString("nome");
-//        }
-//    }    
-    
-//    public List<Usuario> listarUsuario() throws SQLException {
-//    String query = "SELECT id, nome FROM usuario"; // Query para retornar os usuários
-//    PreparedStatement statement = connection.prepareStatement(query);
-//    ResultSet resultSet = statement.executeQuery();
-//    
-//    List<Usuario> usuarios = new ArrayList<>();
-//    
-//    while(resultSet.next()){
-//        int id = resultSet.getInt("id");
-//        String nome = resultSet.getString("nome");
-//        
-//        Usuario usuario = new Usuario(id, nome);
-//        usuarios.add(usuario);
-//    }
-//    
-//    return usuarios;
-//    }
+
 
     public boolean existeUsuario(String nome) throws SQLException {
         String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
@@ -110,4 +89,43 @@ public class UsuarioDAO {
         }
         return false;
     }
+    
+    // Método para retornar os usuários do tipo 2
+    public ArrayList<Usuario> getUsuariosTipo2() {
+        ArrayList<Usuario> usuariosTipo2 = new ArrayList<>();
+
+        try {
+            // Conexão com o banco de dados (supondo que já esteja configurada)
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+            // Criação da consulta SQL
+            String query = "SELECT id, nome, pontuacao FROM usuario WHERE tipo = 2 ORDER BY pontuacao DESC";
+            // Criação do statement
+            PreparedStatement statement = connection.prepareStatement(query);
+            // Execução da consulta
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // Iteração pelos resultados
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String nome = resultSet.getString("nome");
+                int pontuacao = resultSet.getInt("pontuacao");
+
+                // Criação de um objeto Usuario com os dados retornados
+                Usuario usuario = new Usuario(id, nome, pontuacao);
+
+                // Adição do usuário à lista de usuários do tipo 2
+                usuariosTipo2.add(usuario);
+            }
+
+            // Fechamento das conexões
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return usuariosTipo2;
+    }
+    
 }
