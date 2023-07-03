@@ -86,16 +86,35 @@ public class PalavraDAO {
             return 0;
     }
 
-    public void substituirPorLetra(ArrayList<String> letras, ArrayList<String> tracos, String letra) {
+    public boolean substituirPorLetra(ArrayList<String> letras, ArrayList<String> tracos, String letra) {
         String letraLowerCase = letra.toLowerCase(); // Converte a letra para minúscula
+        boolean trocaFeita = false; // Variável para indicar se houve troca
 
         for (int i = 0; i < letras.size(); i++) {
             String elemento = letras.get(i).toLowerCase(); // Converte o elemento para minúscula
             if (elemento.equals(letraLowerCase)) {
                 tracos.set(i, letra); // Substitui o valor correspondente em tracos pela letra
+                trocaFeita = true; // Define a variável como true, indicando que houve troca
             }
         }
-    }
 
+        return trocaFeita; // Retorna o valor indicando se houve troca ou não
+    }
+    
+    public boolean ganhou(ArrayList<String> array1, ArrayList<String> array2) {
+        // Verifica se os arrays têm tamanhos diferentes
+        if (array1.size() != array2.size()) {
+            return false;
+        }
+
+        // Compara cada elemento dos arrays
+        for (int i = 0; i < array1.size(); i++) {
+            if (!array1.get(i).equals(array2.get(i))) {
+                return false; // Se um elemento for diferente, retorna falso
+            }
+        }
+
+        return true; // Se todos os elementos forem iguais, retorna verdadeiro
+    }
 
 }

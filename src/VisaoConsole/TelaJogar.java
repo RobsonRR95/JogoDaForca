@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -193,33 +194,39 @@ public class TelaJogar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btDesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDesistirActionPerformed
-        dispose();
+        dispose(); // Joga a tela fora
     }//GEN-LAST:event_btDesistirActionPerformed
 
     private void btEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnviarActionPerformed
-                letra = textLetra.getText();// Obter a letra digitada pelo usuário
-                
-                Connection connection;
-            try {
-                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
-                PalavraDAO palavraDAO = new PalavraDAO(connection);
-                
-                // Chamar a função substituirPorLetra para atualizar tracos
-                palavraDAO.substituirPorLetra(letras, tracos, letra);
-                
+        letra = textLetra.getText();// Obter a letra digitada pelo usuário
+        // TODO: fazer a mensagem do ganhou aparecer corretamente      
+        Connection connection;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+            PalavraDAO palavraDAO = new PalavraDAO(connection);
+            
+            // Chamar a função substituirPorLetra para atualizar tracos
+            if(palavraDAO.substituirPorLetra(letras, tracos, letra)){;                
                 // Atualizar o texto do labelPalavraSecreta
                 StringBuilder stringBuilder = new StringBuilder();
                 for (String elemento : tracos) {
                     stringBuilder.append(elemento.toUpperCase());
                 }
                 labelPalavraSecreta.setText(stringBuilder.toString());
-            } catch (SQLException ex) {
-                Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
-            }        
+                if(palavraDAO.ganhou(tracos, letras)){
+                    JOptionPane.showMessageDialog(this, "Parabéns, você ganhou!");
+                }
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Tente novamente!");
+            }
+        }catch (SQLException ex) {
+            Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }//GEN-LAST:event_btEnviarActionPerformed
 
     private void textLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLetraActionPerformed
-        // TODO add your handling code here:
+        // Criado sem querer
     }//GEN-LAST:event_textLetraActionPerformed
     
     
