@@ -85,4 +85,17 @@ public class PalavraDAO {
             }
             return 0;
     }
+
+    public void substituirPorLetra(ArrayList<String> letras, ArrayList<String> tracos, String letra) {
+        String letraLowerCase = letra.toLowerCase(); // Converte a letra para minúscula
+
+        for (int i = 0; i < letras.size(); i++) {
+            String elemento = letras.get(i).toLowerCase(); // Converte o elemento para minúscula
+            if (elemento.equals(letraLowerCase)) {
+                tracos.set(i, letra); // Substitui o valor correspondente em tracos pela letra
+            }
+        }
+    }
+
+
 }

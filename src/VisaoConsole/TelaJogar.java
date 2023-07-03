@@ -30,6 +30,7 @@ public class TelaJogar extends javax.swing.JFrame {
     private ArrayList<String> letras;
     private ArrayList<String> tracos;
     private StringBuilder stringBuilder = new StringBuilder();
+    private String letra;
     
     
     public TelaJogar() throws SQLException {
@@ -65,7 +66,7 @@ public class TelaJogar extends javax.swing.JFrame {
                 
         initComponents();
         
-        // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter
+        // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
         AbstractDocument doc = (AbstractDocument) textLetra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
             @Override
@@ -109,7 +110,18 @@ public class TelaJogar extends javax.swing.JFrame {
 
         jLabel2.setText("Digite uma letra:");
 
+        textLetra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textLetraActionPerformed(evt);
+            }
+        });
+
         btEnviar.setText("Enviar");
+        btEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btEnviarActionPerformed(evt);
+            }
+        });
 
         btDesistir.setText("Desistir");
         btDesistir.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +195,32 @@ public class TelaJogar extends javax.swing.JFrame {
     private void btDesistirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDesistirActionPerformed
         dispose();
     }//GEN-LAST:event_btDesistirActionPerformed
+
+    private void btEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnviarActionPerformed
+                letra = textLetra.getText();// Obter a letra digitada pelo usuário
+                
+                Connection connection;
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+                PalavraDAO palavraDAO = new PalavraDAO(connection);
+                
+                // Chamar a função substituirPorLetra para atualizar tracos
+                palavraDAO.substituirPorLetra(letras, tracos, letra);
+                
+                // Atualizar o texto do labelPalavraSecreta
+                StringBuilder stringBuilder = new StringBuilder();
+                for (String elemento : tracos) {
+                    stringBuilder.append(elemento.toUpperCase());
+                }
+                labelPalavraSecreta.setText(stringBuilder.toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
+            }        
+    }//GEN-LAST:event_btEnviarActionPerformed
+
+    private void textLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLetraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textLetraActionPerformed
     
     
     
@@ -233,6 +271,6 @@ public class TelaJogar extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelPalavraSecreta;
     private javax.swing.JLabel labelTentativas;
-    private javax.swing.JTextField textLetra;
+    public javax.swing.JTextField textLetra;
     // End of variables declaration//GEN-END:variables
 }
