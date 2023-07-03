@@ -65,7 +65,24 @@ public class PalavraDAO {
         // Se não houver retorna null
         return letras;
     }
+    
+    public String recuperarDificuldade(int id) throws SQLException {
+        String query = "SELECT dificuldade FROM palavra WHERE id = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
 
+        String dificuldade = null;
+
+        // Verifica se houve retorno
+        if (resultSet.next()) {
+            dificuldade = resultSet.getString("dificuldade");
+        }
+
+        // Se não houver retorno, dificuldade será null
+        return dificuldade;
+    }
+    
     public int getIdAleatorio() throws SQLException{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
             String sql = "SELECT MAX(id) FROM palavra";
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -107,14 +124,15 @@ public class PalavraDAO {
             return false;
         }
 
-        // Compara cada elemento dos arrays
+        // Compara cada elemento dos arrays, ignorando o caso
         for (int i = 0; i < array1.size(); i++) {
-            if (!array1.get(i).equals(array2.get(i))) {
+            if (!array1.get(i).equalsIgnoreCase(array2.get(i))) {
                 return false; // Se um elemento for diferente, retorna falso
             }
         }
 
         return true; // Se todos os elementos forem iguais, retorna verdadeiro
     }
+
 
 }

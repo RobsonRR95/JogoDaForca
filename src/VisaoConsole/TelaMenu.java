@@ -25,7 +25,7 @@ public class TelaMenu extends javax.swing.JFrame {
      * Creates new form TelaMenu
      */
     
-    private String nick; // Recebe o nickname único do usuário
+    private final String nick; // Recebe o nickname único do usuário
     
     public TelaMenu(String nome) {
         initComponents();

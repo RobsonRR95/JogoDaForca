@@ -2,11 +2,20 @@ package Modelo;
 
 // @author Robson Rosa
 
+import java.util.ArrayList;
+
+
 public class Palavra {
     private int id;
+    private ArrayList<String> letras;
     private String palavra;
     private String dificuldade;
 
+    public Palavra(ArrayList<String> letras, String dificuldade) {
+        this.letras = letras;
+        this.dificuldade = dificuldade;
+    }
+    
     public int getId() {
         return id;
     }

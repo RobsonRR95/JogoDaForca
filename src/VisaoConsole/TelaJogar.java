@@ -5,6 +5,7 @@
 package VisaoConsole;
 
 import DAO.PalavraDAO;
+import Modelo.Palavra;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,11 +28,11 @@ public class TelaJogar extends javax.swing.JFrame {
      * Creates new form TelaJogar
      */
     
-    private int idAleatorio, i;
+    private int idAleatorio, i, tentativas = 0, pontuacao;
     private ArrayList<String> letras;
     private ArrayList<String> tracos;
     private StringBuilder stringBuilder = new StringBuilder();
-    private String letra;
+    private String letra, dificuldade;
     
     
     public TelaJogar() throws SQLException {
@@ -67,15 +68,23 @@ public class TelaJogar extends javax.swing.JFrame {
                 
         initComponents();
         
+        // Pega a dificuldade da palavra para calcular a pontuação
+        dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
+        labelDificuldade.setText(dificuldade);
+        
+        // Pega o tamanho da palavra e calcula a pontuação
+        int tamanhoPalavra = letras.size();
+        pontuacao = tamanhoPalavra * 5;
+        
         // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
         AbstractDocument doc = (AbstractDocument) textLetra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
             @Override
             public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
                 int newLength = fb.getDocument().getLength() - length + text.length();
-                // Validar se o texto inserido é uma letra e tem só um caracter
+                // Valida se o texto inserido é uma letra e tem só um caracter
                 if (text.matches("[a-zA-Z]") && newLength <= 1) {
-                    // Permitir a substituição do texto
+                    // Permite a substituição do texto
                     super.replace(fb, offset, length, text, attrs);
                 }
             }
@@ -99,6 +108,10 @@ public class TelaJogar extends javax.swing.JFrame {
         textLetra = new javax.swing.JTextField();
         btEnviar = new javax.swing.JButton();
         btDesistir = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        labelPontuacao = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        labelDificuldade = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,7 +120,7 @@ public class TelaJogar extends javax.swing.JFrame {
 
         jLabel1.setText("Nº Tentativas:");
 
-        labelTentativas.setText("tentativas");
+        labelTentativas.setText("0");
 
         jLabel2.setText("Digite uma letra:");
 
@@ -131,42 +144,58 @@ public class TelaJogar extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("Pontuação:");
+
+        labelPontuacao.setText("0");
+
+        jLabel4.setText("Dificuldade:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(148, Short.MAX_VALUE)
+                .addContainerGap(146, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(btDesistir)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(labelPalavraSecreta)
-                        .addGap(137, 137, 137))
+                        .addGap(139, 139, 139))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btEnviar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textLetra, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(labelTentativas)))))
-                        .addGap(159, 159, 159))))
+                                    .addComponent(labelTentativas)
+                                    .addComponent(labelPontuacao)
+                                    .addComponent(labelDificuldade))))
+                        .addGap(157, 157, 157))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btDesistir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(labelPalavraSecreta)
-                .addGap(29, 29, 29)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(labelDificuldade))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(labelPontuacao))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(labelTentativas))
@@ -176,7 +205,7 @@ public class TelaJogar extends javax.swing.JFrame {
                     .addComponent(textLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btEnviar)
-                .addGap(90, 90, 90))
+                .addGap(43, 43, 43))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,31 +227,54 @@ public class TelaJogar extends javax.swing.JFrame {
     }//GEN-LAST:event_btDesistirActionPerformed
 
     private void btEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnviarActionPerformed
-        letra = textLetra.getText();// Obter a letra digitada pelo usuário
+        letra = textLetra.getText(); // Obter a letra digitada pelo usuário
         // TODO: fazer a mensagem do ganhou aparecer corretamente      
         Connection connection;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
             PalavraDAO palavraDAO = new PalavraDAO(connection);
             
-            // Chamar a função substituirPorLetra para atualizar tracos
-            if(palavraDAO.substituirPorLetra(letras, tracos, letra)){;                
-                // Atualizar o texto do labelPalavraSecreta
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String elemento : tracos) {
-                    stringBuilder.append(elemento.toUpperCase());
+            if(!letra.equals("")){
+
+                // Chamar a função substituirPorLetra para atualizar tracos
+                if(palavraDAO.substituirPorLetra(letras, tracos, letra)){;                
+                    // Atualizar o texto do labelPalavraSecreta
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String elemento : tracos) {
+                        stringBuilder.append(elemento.toUpperCase());
+                    }
+                    labelPalavraSecreta.setText(stringBuilder.toString());
+                    if(palavraDAO.ganhou(tracos, letras)){
+                        Object[] options = {"Menu Inicial"};
+                        int result = JOptionPane.showOptionDialog(this, "Parabéns!!!\nVocê venceu e fez "+ pontuacao + " pontos.", "Vitória", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+                        if(result == JOptionPane.OK_OPTION){
+                            dispose();
+                        }
+                    }
                 }
-                labelPalavraSecreta.setText(stringBuilder.toString());
-                if(palavraDAO.ganhou(tracos, letras)){
-                    JOptionPane.showMessageDialog(this, "Parabéns, você ganhou!");
+                else{
+                    JOptionPane.showMessageDialog(this, "Tente novamente!");
+                    tentativas++; // Incrementa a quantidade de tentativas a cada vez que o botão é clicado.
+                    // Decrementa a pontuação quando erra a letra
+                    if(dificuldade.equals("Facil")){
+                        pontuacao --;
+                    }
+                    else if(dificuldade.equals("Medio")){
+                        pontuacao -= 2;
+                    }
+                    else{
+                        pontuacao -= 3;
+                    }
                 }
             }
             else{
-                JOptionPane.showMessageDialog(this, "Tente novamente!");
+                JOptionPane.showMessageDialog(this, "Digite uma letra!");
             }
         }catch (SQLException ex) {
             Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
+        labelTentativas.setText(String.valueOf(tentativas));
+        labelPontuacao.setText(String.valueOf(pontuacao));
     }//GEN-LAST:event_btEnviarActionPerformed
 
     private void textLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLetraActionPerformed
@@ -275,8 +327,12 @@ public class TelaJogar extends javax.swing.JFrame {
     private javax.swing.JButton btEnviar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelDificuldade;
     private javax.swing.JLabel labelPalavraSecreta;
+    private javax.swing.JLabel labelPontuacao;
     private javax.swing.JLabel labelTentativas;
     public javax.swing.JTextField textLetra;
     // End of variables declaration//GEN-END:variables
