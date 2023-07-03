@@ -21,16 +21,10 @@ import javax.swing.JOptionPane;
  * @author santo
  */
 public class TelaLogin extends javax.swing.JFrame {
-
-    /**
+/**
      * Creates new form TelaCadastro
      */
-    
-
-    Usuario usuarioLogado; // Variável para passar o nome do usuário para próxima tela
-    
-    
-    
+     
     public TelaLogin() throws SQLException {
         initComponents();
     }

@@ -1,10 +1,16 @@
 package DAO;
 
+import Modelo.Palavra;
 import Modelo.Usuario;
+import static java.lang.Math.random;
+import static java.lang.StrictMath.random;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Random;
+
 
 // @author Robson Rosa
 
@@ -42,37 +48,57 @@ public class PalavraDAO {
         return false; // Caso ocorra algum problema na consulta
     }
 
-    public Usuario recuperar(String nome) throws SQLException{
-        String query = "SELECT * FROM usuario WHERE nome = ?";
+//    public Palavra recuperar(int id) throws SQLException{
+//        String query = "SELECT * FROM palavra WHERE id = ?";
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        statement.setInt(1, id);
+//        ResultSet resultSet = statement.executeQuery();
+//
+//        // Verifica se houve retorno
+//        if(resultSet.next()){
+//            Palavra p = new Palavra();
+//            p.setId(resultSet.getInt("id"));
+//            p.setPalavra(resultSet.getString("nome"));
+//            p.setDificuldade(resultSet.getString("senha"));
+//            return p;           
+//        }
+//        // Se não houver retorna null
+//        return null;
+//    }
+    
+    public ArrayList<String> recuperar(int id) throws SQLException {
+        String query = "SELECT * FROM palavra WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, nome);
+        statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
 
+        ArrayList<String> letras = new ArrayList<>();
+
         // Verifica se houve retorno
-        if(resultSet.next()){
-            Usuario usuario = new Usuario();
-            usuario.setId(resultSet.getInt("id"));
-            usuario.setNome(resultSet.getString("nome"));
-            usuario.setSenha(resultSet.getString("senha"));
-            usuario.setTipo(resultSet.getInt("tipo"));
-            return usuario;           
+        while (resultSet.next()) {
+            String palavra = resultSet.getString("palavra");
+            for (int i = 0; i < palavra.length(); i++) {
+                letras.add(Character.toString(palavra.charAt(i)));
+            }
         }
+
         // Se não houver retorna null
-        return null;
+        return letras;
     }
 
-    public boolean loginUsuario(String nome, String senha) throws SQLException{
-        String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
 
-        try(PreparedStatement statement = connection.prepareStatement(query)){
-            statement.setString(1, nome);
-            statement.setString(2, senha);
-            ResultSet resultSet = statement.executeQuery(); 
-            return resultSet.next(); // Retorna true
-        }
-        catch(SQLException e){
-            e.printStackTrace(); // Exibe o erro de conexão do BD no output
-        }
-        return false;
+    public int getIdAleatorio() throws SQLException{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
+            String sql = "SELECT MAX(id) FROM palavra";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int maxId = resultSet.getInt(1);               
+                // Gera um número aleatório entre 1 e maxId
+                Random random = new Random();
+                int idAleatorio = random.nextInt(maxId - 301 + 1) + 301;
+                return idAleatorio;
+            }
+            return 0;
     }
 }

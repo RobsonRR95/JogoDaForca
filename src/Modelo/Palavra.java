@@ -3,23 +3,16 @@ package Modelo;
 // @author Robson Rosa
 
 public class Palavra {
-    
-    private EnumDificuldade dificuldade;
+    private int id;
     private String palavra;
-    private int quantidadeDeLetras;
+    private String dificuldade;
 
-    public Palavra(EnumDificuldade dificuldade, String palavra) {
-        this.dificuldade = dificuldade;
-        this.palavra = palavra;
-        quantidadeDeLetras = this.palavra.length();
+    public int getId() {
+        return id;
     }
 
-    public EnumDificuldade getDificuldade() {
-        return dificuldade;
-    }
-
-    public void setDificuldade(EnumDificuldade dificuldade) {
-        this.dificuldade = dificuldade;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getPalavra() {
@@ -30,9 +23,12 @@ public class Palavra {
         this.palavra = palavra;
     }
 
-    public int getQuantidadeDeLetras() {
-        return quantidadeDeLetras;
+    public String getDificuldade() {
+        return dificuldade;
     }
-    
+
+    public void setDificuldade(String dificuldade) {
+        this.dificuldade = dificuldade;
+    }
     
 }

@@ -54,6 +54,11 @@ public class TelaMenu extends javax.swing.JFrame {
         jLabel1.setText("Menu Inicial");
 
         btJogar.setText("Jogar");
+        btJogar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btJogarActionPerformed(evt);
+            }
+        });
 
         btCadastroUsuario.setText("Cadastrar Usuário");
         btCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -199,6 +204,16 @@ public class TelaMenu extends javax.swing.JFrame {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btCadastroPalavraActionPerformed
+
+    private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
+        TelaJogar telaJogar = null;
+        try {
+            telaJogar = new TelaJogar();
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        telaJogar.setVisible(true);
+    }//GEN-LAST:event_btJogarActionPerformed
 
 //    /**
 //     * @param args the command line arguments
