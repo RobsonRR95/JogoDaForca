@@ -31,8 +31,6 @@ public class PalavraDAO {
         statement.setInt(3, usuario.getTipo());
         statement.executeUpdate();
     }
-    
-
 
     public boolean existeUsuario(String nome) throws SQLException {
         String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
@@ -47,24 +45,6 @@ public class PalavraDAO {
 
         return false; // Caso ocorra algum problema na consulta
     }
-
-//    public Palavra recuperar(int id) throws SQLException{
-//        String query = "SELECT * FROM palavra WHERE id = ?";
-//        PreparedStatement statement = connection.prepareStatement(query);
-//        statement.setInt(1, id);
-//        ResultSet resultSet = statement.executeQuery();
-//
-//        // Verifica se houve retorno
-//        if(resultSet.next()){
-//            Palavra p = new Palavra();
-//            p.setId(resultSet.getInt("id"));
-//            p.setPalavra(resultSet.getString("nome"));
-//            p.setDificuldade(resultSet.getString("senha"));
-//            return p;           
-//        }
-//        // Se não houver retorna null
-//        return null;
-//    }
     
     public ArrayList<String> recuperar(int id) throws SQLException {
         String query = "SELECT * FROM palavra WHERE id = ?";
@@ -86,17 +66,21 @@ public class PalavraDAO {
         return letras;
     }
 
-
     public int getIdAleatorio() throws SQLException{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
             String sql = "SELECT MAX(id) FROM palavra";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
+            
+            String sql2 = "SELECT MIN(id) FROM palavra";
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+            ResultSet resultSet2 = statement2.executeQuery();
 
-            if (resultSet.next()) {
-                int maxId = resultSet.getInt(1);               
-                // Gera um número aleatório entre 1 e maxId
+            if (resultSet.next() && resultSet2.next()) {
+                int maxId = resultSet.getInt(1);
+                int minId = resultSet2.getInt(1);
+                // Gera um número aleatório entre minId e maxId
                 Random random = new Random();
-                int idAleatorio = random.nextInt(maxId - 301 + 1) + 301;
+                int idAleatorio = random.nextInt(maxId - minId + 1) + 301;
                 return idAleatorio;
             }
             return 0;
