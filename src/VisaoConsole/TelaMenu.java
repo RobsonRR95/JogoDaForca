@@ -46,8 +46,8 @@ public class TelaMenu extends javax.swing.JFrame {
         btJogar = new javax.swing.JButton();
         btCadastroUsuario = new javax.swing.JButton();
         btCadastroPalavra = new javax.swing.JButton();
-        btRanking = new javax.swing.JButton();
         btListaJogadores = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,12 +74,17 @@ public class TelaMenu extends javax.swing.JFrame {
             }
         });
 
-        btRanking.setText("Ranking");
-
-        btListaJogadores.setText("Listar Jogadores");
+        btListaJogadores.setText("Ranking");
         btListaJogadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btListaJogadoresActionPerformed(evt);
+            }
+        });
+
+        btExcluir.setText("Excluir Usuário");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
             }
         });
 
@@ -95,10 +100,10 @@ public class TelaMenu extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(btListaJogadores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btRanking, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btCadastroPalavra, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btJogar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btCadastroUsuario, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(btCadastroUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(184, 184, 184))
         );
         jPanel1Layout.setVerticalGroup(
@@ -106,17 +111,17 @@ public class TelaMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addComponent(jLabel1)
-                .addGap(31, 31, 31)
+                .addGap(25, 25, 25)
                 .addComponent(btJogar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btCadastroUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btCadastroPalavra)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btRanking)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btListaJogadores)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btExcluir)
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,6 +220,36 @@ public class TelaMenu extends javax.swing.JFrame {
         telaJogar.setVisible(true);
     }//GEN-LAST:event_btJogarActionPerformed
 
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        // Faz a conexão com o BD
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        }
+        catch (SQLException ex) {
+            
+        }
+        
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+        
+        // Try Catch para validar conexão com o BD
+        try {
+            Usuario usuarioRecuperado = usuarioDAO.recuperar(nick); // Pegar o nick do usuário logado
+            int tipoUsuario = usuarioRecuperado.getTipo(); // Pega o tipo para validar se é administrador ou  não
+            if(tipoUsuario == 1){
+                //JOptionPane.showMessageDialog(this, "Você é o: " + nick);
+                TelaExcluir telaExcluir = new TelaExcluir(nick);
+                telaExcluir.setVisible(true);
+                //this.setVisible(false); // Desativei provisório, não consegui remover, já que a TelaMenu precisa ser chamada com a entrega do nome.
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Você não é um administrador! Permissão negada."); // Else caso o usuário não seja administrador.
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -253,9 +288,9 @@ public class TelaMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastroPalavra;
     private javax.swing.JButton btCadastroUsuario;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btJogar;
     private javax.swing.JButton btListaJogadores;
-    private javax.swing.JButton btRanking;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

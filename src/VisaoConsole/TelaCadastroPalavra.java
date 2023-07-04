@@ -155,7 +155,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
             // TODO: fazer catch da falha de conexão do BD
         }
         
-        String palavra = textPalavra.getText();
+        String palavra = textPalavra.getText().toUpperCase();
         String combo = (String) selectDificuldade.getSelectedItem(); // Faz o cast da seleção para String
         
         EnumDificuldade dificuldade;
