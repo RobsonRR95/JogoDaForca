@@ -31,11 +31,11 @@ public class TelaJogar extends javax.swing.JFrame {
      */
     
     private int idAleatorio, i, tentativas = 5, pontuacao = 0;
-    private ArrayList<String> letras;
-    private ArrayList<String> tracos;
-    private ArrayList<String> letrasUsadas = new ArrayList<>();
-    private StringBuilder stringBuilder = new StringBuilder();
-    private String letra;
+    private ArrayList<String> letras; // Criada para armazenar as letras da palavra escolhida
+    private ArrayList<String> tracos; // Criado para exibir os traços que serão substituídos
+    private ArrayList<String> letrasUsadas = new ArrayList<>(); // Criado para exibir as letras usadas
+    private StringBuilder stringBuilder = new StringBuilder(); // Constrói a String para o jogo
+    private String letra; 
     private final String dificuldade;
     private final String nickname;
     
@@ -89,7 +89,8 @@ public class TelaJogar extends javax.swing.JFrame {
         // Pega a dificuldade da palavra para calcular a pontuação
         dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
         labelDificuldade.setText(dificuldade);
-       
+        
+        // Faz o cálculo da pontuação
         if (dificuldade.equals("Facil")) {
             labelPontuacao.setText("10 pontos + Tentativas Restantes");
         } else if (dificuldade.equals("Medio")) {
@@ -136,7 +137,7 @@ public class TelaJogar extends javax.swing.JFrame {
         labelDificuldade = new javax.swing.JLabel();
         labelLetrasUsadas = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         labelPalavraSecreta.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         labelPalavraSecreta.setText(stringBuilder.toString());
@@ -160,7 +161,7 @@ public class TelaJogar extends javax.swing.JFrame {
             }
         });
 
-        btDesistir.setText("Desistir");
+        btDesistir.setText("Voltar");
         btDesistir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btDesistirActionPerformed(evt);
@@ -261,12 +262,16 @@ public class TelaJogar extends javax.swing.JFrame {
         letra = textLetra.getText(); // Obter a letra digitada pelo usuário  
         Connection connection;
         try {
+            // Faz a conexão com o banco
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
             UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
             PalavraDAO palavraDAO = new PalavraDAO(connection);
-
+            
+            // Controla se o jogo deve continuar ou não
             if (tentativas > 1) {
+                // Controla se o usuário digitou alguma letra
                 if (!letra.equals("")) {
+                    // Controla se a letra já foi usada
                     if (!letrasUsadas.contains(letra)) {  // Verifica se a letra já foi usada
                         letrasUsadas.add(letra);  // Adiciona a letra às letras usadas
 
@@ -327,7 +332,7 @@ public class TelaJogar extends javax.swing.JFrame {
         // Muda o texto para quantidade de tentativas atual
         labelTentativas.setText(String.valueOf(tentativas));
         // Apaga a letra do textLetra para o usuário inserir a nova letra TODO: não está alterando
-        textLetra.setText(null);
+        //textLetra.setText(null);
     }//GEN-LAST:event_btEnviarActionPerformed
 
     private void textLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLetraActionPerformed

@@ -5,7 +5,6 @@
 package VisaoConsole;
 
 import DAO.PalavraDAO;
-import DAO.UsuarioDAO;
 import Modelo.EnumDificuldade;
 import Modelo.Palavra;
 import java.sql.Connection;
@@ -14,6 +13,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -28,6 +31,32 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
      */
     public TelaCadastroPalavra() {
         initComponents();
+        
+//        // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
+//        AbstractDocument doc = (AbstractDocument) textPalavra.getDocument();
+//        doc.setDocumentFilter(new DocumentFilter() {
+//            @Override
+//            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+//                // Valida se o texto inserido é uma letra e tem só um caracter
+//                if (text.matches("[a-zA-Z]")) {
+//                    // Permite a substituição do texto
+//                    super.replace(fb, offset, length, text, attrs);
+//                }
+//            }
+//        });
+
+        AbstractDocument doc = (AbstractDocument) textPalavra.getDocument();
+        doc.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Valida se o texto inserido é uma letra e tem apenas um caractere, sem espaços
+                if (text.matches("[a-zA-Z]") && !text.contains(" ")) {
+                    // Permite a substituição do texto
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+
     }
 
     /**
@@ -48,7 +77,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
         btCadastrar = new javax.swing.JToggleButton();
         btCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -90,10 +119,6 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                         .addGap(49, 49, 49)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(18, 18, 18)
@@ -101,7 +126,11 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(textPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(textPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(142, 142, 142))
         );
         jPanel1Layout.setVerticalGroup(

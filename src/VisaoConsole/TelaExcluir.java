@@ -27,7 +27,7 @@ public class TelaExcluir extends javax.swing.JFrame {
      * Creates new form TelaExcluir
      */
     
-    private String nickAtual;
+    private final String nickAtual;
        
     public TelaExcluir(String nick) throws SQLException {
         nickAtual = nick;
@@ -75,7 +75,7 @@ public class TelaExcluir extends javax.swing.JFrame {
         btExcluir = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Digite o Nickname do usuário que deseja excluir:");
 
@@ -149,8 +149,8 @@ public class TelaExcluir extends javax.swing.JFrame {
             
             if(!nick.equals("")){
                 if(!nick.equals(nickAtual)){
-                    if(usuarioDAO.excluirUsuario(nick)){
-                        JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso! 🚮"); 
+                    if(usuarioDAO.excluir(nick)){
+                        JOptionPane.showMessageDialog(this, "Usuário excluído com sucesso! 🚮");
                     }
                     else{
                         JOptionPane.showMessageDialog(this, "Usuário não existente!"); 
@@ -165,7 +165,7 @@ public class TelaExcluir extends javax.swing.JFrame {
             }
             
             
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btExcluirActionPerformed

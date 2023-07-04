@@ -15,7 +15,7 @@ import java.util.Random;
 // @author Robson Rosa
 
 public class PalavraDAO implements DAO{
-    private Connection connection;
+    private final Connection connection;
     
     // Puxa a conexão com o BD
     public PalavraDAO(Connection connection){
@@ -146,6 +146,11 @@ public class PalavraDAO implements DAO{
 
     @Override
     public void alterar(Object obj1, Object obj2) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean excluir(Object obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

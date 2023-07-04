@@ -96,7 +96,9 @@ public class UsuarioDAO implements DAO{
         return null;
     }
     
-    public boolean excluirUsuario(String nickname) throws SQLException {
+    @Override
+    public boolean excluir(Object obj) throws Exception {
+        String nickname = (String)obj;
         String query = "DELETE FROM usuario WHERE nome = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, nickname);

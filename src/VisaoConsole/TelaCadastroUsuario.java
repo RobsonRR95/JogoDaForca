@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 /**
  *
@@ -26,6 +30,19 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
      */
     public TelaCadastroUsuario() {
         initComponents();
+        
+        AbstractDocument doc = (AbstractDocument) textNickname.getDocument();
+        doc.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Valida se o texto inserido é uma letra e tem apenas um caractere, sem espaços
+                if (text.matches("[a-zA-Z]") && !text.contains(" ")) {
+                    // Permite a substituição do texto
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
+        
     }
 
     /**
@@ -48,7 +65,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
         btCancelar = new javax.swing.JButton();
         comboTipo = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Cadastro de Usuário");
 
