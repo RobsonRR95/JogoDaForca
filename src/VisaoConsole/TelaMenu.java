@@ -208,7 +208,7 @@ public class TelaMenu extends javax.swing.JFrame {
     private void btJogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btJogarActionPerformed
         TelaJogar telaJogar = null;
         try {
-            telaJogar = new TelaJogar();
+            telaJogar = new TelaJogar(nick);
         } catch (SQLException ex) {
             Logger.getLogger(TelaMenu.class.getName()).log(Level.SEVERE, null, ex);
         }

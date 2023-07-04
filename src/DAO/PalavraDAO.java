@@ -133,6 +133,14 @@ public class PalavraDAO {
 
         return true; // Se todos os elementos forem iguais, retorna verdadeiro
     }
+    
+    public void alteraPontuacao(String nick, int pontuacaoNova) throws SQLException {
+        String query = "CALL somarPontuacao(?, ?)"; // Chama a procedure do BD
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, nick);
+        statement.setInt(2, pontuacaoNova);
+        statement.execute();
+    }
 
 
 }

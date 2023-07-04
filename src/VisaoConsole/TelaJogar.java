@@ -5,7 +5,8 @@
 package VisaoConsole;
 
 import DAO.PalavraDAO;
-import Modelo.Palavra;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,14 +29,18 @@ public class TelaJogar extends javax.swing.JFrame {
      * Creates new form TelaJogar
      */
     
-    private int idAleatorio, i, tentativas = 0, pontuacao;
+    private int idAleatorio, i, tentativas = 5, pontuacao = 0;
     private ArrayList<String> letras;
     private ArrayList<String> tracos;
     private StringBuilder stringBuilder = new StringBuilder();
-    private String letra, dificuldade;
+    private String letra;
+    private final String dificuldade;
+    private final String nickname;
     
     
-    public TelaJogar() throws SQLException {
+    public TelaJogar(String nick) throws SQLException {
+        nickname = nick;
+        System.out.println(nickname);
         Connection connection;
         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
         PalavraDAO palavraDAO = new PalavraDAO(connection);
@@ -65,17 +70,22 @@ public class TelaJogar extends javax.swing.JFrame {
         for (String traco : tracos) {
             stringBuilder.append(traco);
         }
-                
+        
+        // Inicia os components do JFrame
         initComponents();
         
+        // Ativa o enter para o btEnviar
+        textLetra.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btEnviar.doClick(); // Aciona o botão "Enviar"
+            }
+        });
+
         // Pega a dificuldade da palavra para calcular a pontuação
         dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
         labelDificuldade.setText(dificuldade);
-        
-        // Pega o tamanho da palavra e calcula a pontuação
-        int tamanhoPalavra = letras.size();
-        pontuacao = tamanhoPalavra * 5;
-        
+       
         // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
         AbstractDocument doc = (AbstractDocument) textLetra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
@@ -227,54 +237,73 @@ public class TelaJogar extends javax.swing.JFrame {
     }//GEN-LAST:event_btDesistirActionPerformed
 
     private void btEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEnviarActionPerformed
-        letra = textLetra.getText(); // Obter a letra digitada pelo usuário
-        // TODO: fazer a mensagem do ganhou aparecer corretamente      
+        letra = textLetra.getText(); // Obter a letra digitada pelo usuário  
         Connection connection;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
             PalavraDAO palavraDAO = new PalavraDAO(connection);
             
-            if(!letra.equals("")){
+            if(tentativas > 0){
+                if(!letra.equals("")){
 
-                // Chamar a função substituirPorLetra para atualizar tracos
-                if(palavraDAO.substituirPorLetra(letras, tracos, letra)){;                
-                    // Atualizar o texto do labelPalavraSecreta
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (String elemento : tracos) {
-                        stringBuilder.append(elemento.toUpperCase());
-                    }
-                    labelPalavraSecreta.setText(stringBuilder.toString());
-                    if(palavraDAO.ganhou(tracos, letras)){
-                        Object[] options = {"Menu Inicial"};
-                        int result = JOptionPane.showOptionDialog(this, "Parabéns!!!\nVocê venceu e fez "+ pontuacao + " pontos.", "Vitória", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
-                        if(result == JOptionPane.OK_OPTION){
-                            dispose();
+                    // Chamar a função substituirPorLetra para atualizar tracos
+                    if(palavraDAO.substituirPorLetra(letras, tracos, letra)){;                
+                        // Atualizar o texto do labelPalavraSecreta
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (String elemento : tracos) {
+                            stringBuilder.append(elemento.toUpperCase());
                         }
+                        labelPalavraSecreta.setText(stringBuilder.toString());
+                        if(palavraDAO.ganhou(tracos, letras)){
+                            // Controla a pontuação pela dificuldade da palavra
+                            if(dificuldade.equals("Facil")){
+                                pontuacao = tentativas + 10;
+                            }
+                            else if(dificuldade.equals("Medio")){
+                                pontuacao = tentativas + 15;
+                            }
+                            else{
+                                pontuacao = tentativas + 20;
+                            }
+                            // Chama o método para alterar a pontuação
+                            System.out.println(nickname);
+                            palavraDAO.alteraPontuacao(nickname, pontuacao);
+
+                            // Faz o OK do dialog voltar pro menu 
+                            Object[] options = {"Menu Inicial"};
+                            int result = JOptionPane.showOptionDialog(this, "Parabéns!!!\nVocê venceu e fez "+ pontuacao + " pontos.", "Vitória", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+                            if(result == JOptionPane.OK_OPTION){
+                                dispose();
+                            }
+
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Tente novamente!");
+                        tentativas--;
                     }
                 }
                 else{
-                    JOptionPane.showMessageDialog(this, "Tente novamente!");
-                    tentativas++; // Incrementa a quantidade de tentativas a cada vez que o botão é clicado.
-                    // Decrementa a pontuação quando erra a letra
-                    if(dificuldade.equals("Facil")){
-                        pontuacao --;
-                    }
-                    else if(dificuldade.equals("Medio")){
-                        pontuacao -= 2;
-                    }
-                    else{
-                        pontuacao -= 3;
-                    }
+                    JOptionPane.showMessageDialog(this, "Digite uma letra!");
                 }
             }
             else{
-                JOptionPane.showMessageDialog(this, "Digite uma letra!");
+                // Faz o OK do dialog voltar pro menu 
+                Object[] options = {"Menu Inicial"};
+                int result = JOptionPane.showOptionDialog(this, "Suas tentativas acabaram 💔", "Derrota", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
+                if(result == JOptionPane.OK_OPTION){
+                    dispose();
+                }                
             }
         }catch (SQLException ex) {
             Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
         }
+        // Muda o texto para quantidade de tentativas atual
         labelTentativas.setText(String.valueOf(tentativas));
+        // Muda o texto para pontuação atual
         labelPontuacao.setText(String.valueOf(pontuacao));
+        // Apaga a letra do textLetra para o usuário inserir a nova letra TODO: não está alterando
+        textLetra.setText(null);
     }//GEN-LAST:event_btEnviarActionPerformed
 
     private void textLetraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textLetraActionPerformed
