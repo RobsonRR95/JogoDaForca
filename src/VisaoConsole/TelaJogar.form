@@ -167,7 +167,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pontua&#xe7;&#xe3;o:"/>
+            <Property name="text" type="java.lang.String" value="Valor da Palavra:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="labelPontuacao">

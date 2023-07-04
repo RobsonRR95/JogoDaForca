@@ -75,6 +75,8 @@ public class TelaJogar extends javax.swing.JFrame {
         // Inicia os components do JFrame
         initComponents();
         
+        // Mostra as tentativas atualizadas
+        labelTentativas.setText(String.valueOf(tentativas));
         // Ativa o enter para o btEnviar
         textLetra.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +89,14 @@ public class TelaJogar extends javax.swing.JFrame {
         dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
         labelDificuldade.setText(dificuldade);
        
+        if (dificuldade.equals("Facil")) {
+            labelPontuacao.setText("10 pontos + Tentativas Restantes");
+        } else if (dificuldade.equals("Medio")) {
+            labelPontuacao.setText("15 pontos + Tentativas Restantes");
+        } else {
+            labelPontuacao.setText("20 pontos + Tentativas Restantes");
+        }
+        
         // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
         AbstractDocument doc = (AbstractDocument) textLetra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
@@ -156,7 +166,7 @@ public class TelaJogar extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Pontuação:");
+        jLabel3.setText("Valor da Palavra:");
 
         labelPontuacao.setText("0");
 
@@ -253,7 +263,7 @@ public class TelaJogar extends javax.swing.JFrame {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
             PalavraDAO palavraDAO = new PalavraDAO(connection);
 
-            if (tentativas > 0) {
+            if (tentativas > 1) {
                 if (!letra.equals("")) {
                     if (!letrasUsadas.contains(letra)) {  // Verifica se a letra já foi usada
                         letrasUsadas.add(letra);  // Adiciona a letra às letras usadas
@@ -298,6 +308,8 @@ public class TelaJogar extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Digite uma letra!");
                 }
             } else {
+                // Atualiza tentativas pra 0
+                labelTentativas.setText("0");
                 // Faz o OK do dialog voltar pro menu 
                 Object[] options = {"Menu Inicial"};
                 int result = JOptionPane.showOptionDialog(this, "Suas tentativas acabaram 💔", "Derrota", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
@@ -309,11 +321,9 @@ public class TelaJogar extends javax.swing.JFrame {
             Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
         }
         // Atualiza as letras usadas
-        labelLetrasUsadas.setText(String.valueOf(letrasUsadas));
+        labelLetrasUsadas.setText(String.valueOf(letrasUsadas).toUpperCase());
         // Muda o texto para quantidade de tentativas atual
         labelTentativas.setText(String.valueOf(tentativas));
-        // Muda o texto para pontuação atual
-        labelPontuacao.setText(String.valueOf(pontuacao));
         // Apaga a letra do textLetra para o usuário inserir a nova letra TODO: não está alterando
         textLetra.setText(null);
     }//GEN-LAST:event_btEnviarActionPerformed
