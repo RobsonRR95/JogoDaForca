@@ -5,15 +5,12 @@
 package DAO;
 
 import Modelo.Usuario;
-import com.mysql.cj.xdevapi.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JOptionPane;
 /**
  *
  * @author santo
@@ -25,10 +22,6 @@ public class UsuarioDAO implements DAO{
     public UsuarioDAO(Connection connection){
         this.connection = connection;
     }
-
-//    public UsuarioDAO(com.sun.jdi.connect.spi.Connection connection) {
-//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-//    }
     
     // Recebe os dados para criação de um novo usuário
     @Override
