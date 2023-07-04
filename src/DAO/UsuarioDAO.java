@@ -88,6 +88,17 @@ public class UsuarioDAO implements DAO{
         // Se não houver retorna null
         return null;
     }
+    
+    @Override
+    public boolean excluir(Object obj) throws Exception {
+        String nickname = (String)obj;
+        String query = "DELETE FROM usuario WHERE nome = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, nickname);
+        int rowsAffected = statement.executeUpdate();
+
+        return rowsAffected > 0; // Retorna true se alguma linha foi afetada (usuário excluído com sucesso)
+    }
 
     public boolean loginUsuario(String nome, String senha) throws SQLException{
         String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";

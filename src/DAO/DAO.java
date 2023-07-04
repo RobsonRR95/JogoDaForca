@@ -17,4 +17,6 @@ interface DAO {
     public void inserir(Object obj)throws Exception; 
     
     public void alterar(Object obj1, Object obj2) throws Exception; // Altera pontuação
+    
+    public boolean excluir(Object obj) throws Exception;
 }
