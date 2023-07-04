@@ -4,10 +4,13 @@
  */
 package DAO;
 
+
+
 /**
  *
  * @author Robson Rosa
  */
 interface DAO {
+    
     
 }

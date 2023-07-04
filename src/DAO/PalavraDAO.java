@@ -14,7 +14,7 @@ import java.util.Random;
 
 // @author Robson Rosa
 
-public class PalavraDAO {
+public class PalavraDAO{
     private Connection connection;
     
     // Puxa a conexão com o BD
@@ -22,29 +22,29 @@ public class PalavraDAO {
         this.connection = connection;
     }
     
-    // Recebe os dados para criação de um novo usuário
-    public void inserirUsuario(Usuario usuario) throws SQLException {
-        String query = "INSERT INTO usuario (nome, senha, tipo) VALUES (?, ?, ?)"; // Query para inserir um novo usuário
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, usuario.getNome());
-        statement.setString(2, usuario.getSenha());
-        statement.setInt(3, usuario.getTipo());
-        statement.executeUpdate();
-    }
-
-    public boolean existeUsuario(String nome) throws SQLException {
-        String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, nome);
-        ResultSet resultSet = statement.executeQuery();
-
-        if (resultSet.next()) {
-            int count = resultSet.getInt(1);
-            return count > 0; // Retorna true se já existe um usuário com o mesmo nome
-        }
-
-        return false; // Caso ocorra algum problema na consulta
-    }
+//    // Recebe os dados para criação de um novo usuário
+//    public void inserirUsuario(Usuario usuario) throws SQLException {
+//        String query = "INSERT INTO usuario (nome, senha, tipo) VALUES (?, ?, ?)"; // Query para inserir um novo usuário
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        statement.setString(1, usuario.getNome());
+//        statement.setString(2, usuario.getSenha());
+//        statement.setInt(3, usuario.getTipo());
+//        statement.executeUpdate();
+//    }
+//
+//    public boolean existeUsuario(String nome) throws SQLException {
+//        String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
+//        PreparedStatement statement = connection.prepareStatement(query);
+//        statement.setString(1, nome);
+//        ResultSet resultSet = statement.executeQuery();
+//
+//        if (resultSet.next()) {
+//            int count = resultSet.getInt(1);
+//            return count > 0; // Retorna true se já existe um usuário com o mesmo nome
+//        }
+//
+//        return false; // Caso ocorra algum problema na consulta
+//    }
     
     public ArrayList<String> recuperar(int id) throws SQLException {
         String query = "SELECT * FROM palavra WHERE id = ?";
@@ -142,5 +142,27 @@ public class PalavraDAO {
         statement.execute();
     }
 
+    public boolean existePalavra(String palavra) throws SQLException {
+        String query = "SELECT COUNT(*) FROM palavra WHERE palavra = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, palavra);
+        ResultSet resultSet = statement.executeQuery();
 
+        if (resultSet.next()) {
+            int count = resultSet.getInt(1);
+            return count > 0; // Retorna true se já existe a palavra
+        }
+
+        return false; // Caso ocorra algum problema na consulta
+    }
+
+    public void inserirPalavra(Palavra palavraCadastrada) throws SQLException {
+        String query = "INSERT INTO palavra (palavra, dificuldade) VALUES (?, ?)"; // Query para inserir uma nova palavra
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, palavraCadastrada.getPalavra());
+        statement.setString(2, palavraCadastrada.getDificuldade().getDescricao());
+        statement.executeUpdate();
+    } 
+
+   
 }

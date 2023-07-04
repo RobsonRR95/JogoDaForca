@@ -4,12 +4,25 @@
  */
 package VisaoConsole;
 
+import DAO.PalavraDAO;
+import DAO.UsuarioDAO;
+import Modelo.EnumDificuldade;
+import Modelo.Palavra;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author santo
  */
 public class TelaCadastroPalavra extends javax.swing.JFrame {
-
+    
+    private String dificuldade;
+    
     /**
      * Creates new form TelaCadastroPalavra
      */
@@ -37,23 +50,40 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         jLabel1.setText("Cadastro de Palavra");
 
         jLabel2.setText("Palavra:");
 
         jLabel3.setText("Dificuldade:");
 
-        selectDificuldade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        selectDificuldade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Facil", "Medio", "Dificil" }));
+        selectDificuldade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectDificuldadeActionPerformed(evt);
+            }
+        });
 
         btCadastrar.setText("Cadastrar");
+        btCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastrarActionPerformed(evt);
+            }
+        });
 
         btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(153, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -98,7 +128,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,6 +137,69 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        dispose(); // Joga a tela fora 
+    }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void selectDificuldadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDificuldadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_selectDificuldadeActionPerformed
+
+    private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
+        Connection connection = null;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+        }
+        catch (SQLException ex) {
+            // TODO: fazer catch da falha de conexão do BD
+        }
+        
+        String palavra = textPalavra.getText();
+        String combo = (String) selectDificuldade.getSelectedItem(); // Faz o cast da seleção para String
+        
+        EnumDificuldade dificuldade;
+        
+        if(combo.equals("Facil")){
+            dificuldade = EnumDificuldade.F;
+        }else if(combo.equals("Medio")){
+            dificuldade = EnumDificuldade.M;
+        }
+        else{
+            dificuldade = EnumDificuldade.D;
+        }
+        
+        if(palavra.equals("")){ // Verifica se o campo palavra esta preenchidos
+            JOptionPane.showMessageDialog(this, "Preencha o campo palavra!");
+        }
+        else{
+            // Chamar o método inserirUsuario passando o objeto Usuario como argumento
+            
+            PalavraDAO palavraDAO = new PalavraDAO(connection);
+                        
+            try {
+                if(palavraDAO.existePalavra(palavra)){ // Chama o método e caso retorne true avisa que Nickmane já existe
+                    JOptionPane.showMessageDialog(null, "Palavra já cadastrada! Escolha outra.");
+                }
+                else{ // Se a palavra não existir, cadastra a palavra
+                    Palavra palavraCadastrada = new Palavra(palavra, dificuldade);
+                    
+                
+                    try {
+                        palavraDAO.inserirPalavra(palavraCadastrada);
+                        JOptionPane.showMessageDialog(this, "Palavra inserida com sucesso!");
+                        dispose();
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(this, "Erro ao inserir usuário: " + e.getMessage());
+                    }  
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TelaCadastroPalavra.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+           
+        }
+    }//GEN-LAST:event_btCadastrarActionPerformed
 
 ////    /**
 ////     * @param args the command line arguments

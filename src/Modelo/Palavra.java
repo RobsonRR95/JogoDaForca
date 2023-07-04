@@ -2,28 +2,20 @@ package Modelo;
 
 // @author Robson Rosa
 
-import java.util.ArrayList;
-
 
 public class Palavra {
-    private int id;
-    private ArrayList<String> letras;
     private String palavra;
-    private String dificuldade;
+    private EnumDificuldade dificuldade;
 
-    public Palavra(ArrayList<String> letras, String dificuldade) {
-        this.letras = letras;
+    public Palavra(String palavra, EnumDificuldade dificuldade) {
+        this.palavra = palavra;
         this.dificuldade = dificuldade;
     }
+
+    public Palavra() {
     
-    public int getId() {
-        return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    
     public String getPalavra() {
         return palavra;
     }
@@ -32,11 +24,11 @@ public class Palavra {
         this.palavra = palavra;
     }
 
-    public String getDificuldade() {
+    public EnumDificuldade getDificuldade() {
         return dificuldade;
     }
 
-    public void setDificuldade(String dificuldade) {
+    public void setDificuldade(EnumDificuldade dificuldade) {
         this.dificuldade = dificuldade;
     }
     
