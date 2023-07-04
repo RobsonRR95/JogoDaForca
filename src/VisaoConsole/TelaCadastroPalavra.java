@@ -145,7 +145,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
     private void selectDificuldadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectDificuldadeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_selectDificuldadeActionPerformed
-
+        // TODO adicionar filtro no textfield palavra
     private void btCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarActionPerformed
         Connection connection = null;
         try {

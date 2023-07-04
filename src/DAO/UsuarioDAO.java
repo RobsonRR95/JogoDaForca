@@ -98,7 +98,7 @@ public class UsuarioDAO {
             // Conexão com o banco de dados (supondo que já esteja configurada)
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
             // Criação da consulta SQL
-            String query = "SELECT id, nome, pontuacao FROM usuario WHERE tipo = 2 ORDER BY pontuacao DESC";
+            String query = "SELECT id, nome, pontuacao FROM usuario ORDER BY pontuacao DESC";
             // Criação do statement
             PreparedStatement statement = connection.prepareStatement(query);
             // Execução da consulta
