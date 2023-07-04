@@ -45,7 +45,18 @@ public class UsuarioDAO implements DAO{
         
     } 
     
-
+    @Override
+    public void alterar(Object obj1, Object obj2) throws Exception {
+        if (obj1!=null && obj2!=null && obj1 instanceof String && obj2 instanceof Integer){
+            String nick = (String)obj1;
+            int pontuacaoNova = (int)obj2;
+            String query = "CALL somarPontuacao(?, ?)"; // Chama a procedure do BD
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nick);
+            statement.setInt(2, pontuacaoNova);
+            statement.execute();
+        }
+    }
 
     @Override
     public boolean existe(Object obj) throws Exception {

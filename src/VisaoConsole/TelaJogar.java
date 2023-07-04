@@ -5,6 +5,7 @@
 package VisaoConsole;
 
 import DAO.PalavraDAO;
+import DAO.UsuarioDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -261,6 +262,7 @@ public class TelaJogar extends javax.swing.JFrame {
         Connection connection;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo_da_forca?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=America/Sao_Paulo", "root", "");
+            UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
             PalavraDAO palavraDAO = new PalavraDAO(connection);
 
             if (tentativas > 1) {
@@ -288,7 +290,7 @@ public class TelaJogar extends javax.swing.JFrame {
                                 }
                                 // Chama o método para alterar a pontuação
                                 System.out.println(nickname);
-                                palavraDAO.alteraPontuacao(nickname, pontuacao);
+                                usuarioDAO.alterar(nickname, pontuacao);
 
                                 // Faz o OK do dialog voltar pro menu 
                                 Object[] options = {"Menu Inicial"};
@@ -317,7 +319,7 @@ public class TelaJogar extends javax.swing.JFrame {
                     dispose();
                 }
             }
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
         }
         // Atualiza as letras usadas

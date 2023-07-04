@@ -1,9 +1,9 @@
 package DAO;
 
 import Modelo.Palavra;
-import Modelo.Usuario;
-import static java.lang.Math.random;
-import static java.lang.StrictMath.random;
+//import Modelo.Usuario;
+//import static java.lang.Math.random;
+//import static java.lang.StrictMath.random;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,30 +21,6 @@ public class PalavraDAO implements DAO{
     public PalavraDAO(Connection connection){
         this.connection = connection;
     }
-    
-//    // Recebe os dados para criação de um novo usuário
-//    public void inserirUsuario(Usuario usuario) throws SQLException {
-//        String query = "INSERT INTO usuario (nome, senha, tipo) VALUES (?, ?, ?)"; // Query para inserir um novo usuário
-//        PreparedStatement statement = connection.prepareStatement(query);
-//        statement.setString(1, usuario.getNome());
-//        statement.setString(2, usuario.getSenha());
-//        statement.setInt(3, usuario.getTipo());
-//        statement.executeUpdate();
-//    }
-//
-//    public boolean existeUsuario(String nome) throws SQLException {
-//        String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
-//        PreparedStatement statement = connection.prepareStatement(query);
-//        statement.setString(1, nome);
-//        ResultSet resultSet = statement.executeQuery();
-//
-//        if (resultSet.next()) {
-//            int count = resultSet.getInt(1);
-//            return count > 0; // Retorna true se já existe um usuário com o mesmo nome
-//        }
-//
-//        return false; // Caso ocorra algum problema na consulta
-//    }
     
     public ArrayList<String> recuperar(int id) throws SQLException {
         String query = "SELECT * FROM palavra WHERE id = ?";
@@ -134,13 +110,7 @@ public class PalavraDAO implements DAO{
         return true; // Se todos os elementos forem iguais, retorna verdadeiro
     }
     
-    public void alteraPontuacao(String nick, int pontuacaoNova) throws SQLException {
-        String query = "CALL somarPontuacao(?, ?)"; // Chama a procedure do BD
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, nick);
-        statement.setInt(2, pontuacaoNova);
-        statement.execute();
-    }
+    
 
     @Override
     public boolean existe(Object obj) throws Exception {
@@ -173,6 +143,11 @@ public class PalavraDAO implements DAO{
         }
         
     } 
+
+    @Override
+    public void alterar(Object obj1, Object obj2) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
    
 }
