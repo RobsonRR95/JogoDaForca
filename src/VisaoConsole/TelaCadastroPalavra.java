@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  */
 public class TelaCadastroPalavra extends javax.swing.JFrame {
     
-    private String dificuldade;
+//    private String dificuldade;
     
     /**
      * Creates new form TelaCadastroPalavra
@@ -178,7 +178,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
             PalavraDAO palavraDAO = new PalavraDAO(connection);
                         
             try {
-                if(palavraDAO.existePalavra(palavra)){ // Chama o método e caso retorne true avisa que Nickmane já existe
+                if(palavraDAO.existe(palavra)){ // Chama o método e caso retorne true avisa que Nickmane já existe
                     JOptionPane.showMessageDialog(null, "Palavra já cadastrada! Escolha outra.");
                 }
                 else{ // Se a palavra não existir, cadastra a palavra
@@ -186,14 +186,14 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                     
                 
                     try {
-                        palavraDAO.inserirPalavra(palavraCadastrada);
+                        palavraDAO.inserir(palavraCadastrada);
                         JOptionPane.showMessageDialog(this, "Palavra inserida com sucesso!");
                         dispose();
                     } catch (SQLException e) {
                         JOptionPane.showMessageDialog(this, "Erro ao inserir usuário: " + e.getMessage());
                     }  
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(TelaCadastroPalavra.class.getName()).log(Level.SEVERE, null, ex);
             }
             

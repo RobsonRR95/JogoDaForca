@@ -4,6 +4,8 @@
  */
 package DAO;
 
+import java.sql.SQLException;
+
 
 
 /**
@@ -11,6 +13,7 @@ package DAO;
  * @author Robson Rosa
  */
 interface DAO {
+    public boolean existe(Object obj)throws Exception; // pesquisar
     
-    
+    public void inserir(Object obj)throws Exception; 
 }

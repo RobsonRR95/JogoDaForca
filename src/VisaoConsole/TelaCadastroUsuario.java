@@ -180,7 +180,7 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
             UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
             
             try {
-                if(usuarioDAO.existeUsuario(nome)){ // Chama o método e caso retorne true avisa que Nickmane já existe
+                if(usuarioDAO.existe(nome)){ // Chama o método e caso retorne true avisa que Nickmane já existe
                     JOptionPane.showMessageDialog(null, "Nickname não disponível! Escolha outro.");
                 }
                 else{ // Se o nickmane não existir, cadastra o usuário
@@ -190,14 +190,14 @@ public class TelaCadastroUsuario extends javax.swing.JFrame {
                     usuario.setTipo(tipo);
                 
                     try {
-                        usuarioDAO.inserirUsuario(usuario);
+                        usuarioDAO.inserir(usuario);
                         JOptionPane.showMessageDialog(this, "Usuário inserido com sucesso!");
                         dispose();
                     } catch (SQLException e) {
                         JOptionPane.showMessageDialog(this, "Erro ao inserir usuário: " + e.getMessage());
                     }  
                 }
-            } catch (SQLException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(TelaCadastroUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
             

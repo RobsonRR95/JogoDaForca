@@ -14,7 +14,7 @@ import java.util.Random;
 
 // @author Robson Rosa
 
-public class PalavraDAO{
+public class PalavraDAO implements DAO{
     private Connection connection;
     
     // Puxa a conexão com o BD
@@ -142,26 +142,36 @@ public class PalavraDAO{
         statement.execute();
     }
 
-    public boolean existePalavra(String palavra) throws SQLException {
-        String query = "SELECT COUNT(*) FROM palavra WHERE palavra = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, palavra);
-        ResultSet resultSet = statement.executeQuery();
+    @Override
+    public boolean existe(Object obj) throws Exception {
+        if (obj!=null && obj instanceof String){
+            String palavra = (String)obj;
+            String query = "SELECT COUNT(*) FROM palavra WHERE palavra = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, palavra);
+            ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            int count = resultSet.getInt(1);
-            return count > 0; // Retorna true se já existe a palavra
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retorna true se já existe a palavra
+            }
         }
+        
 
         return false; // Caso ocorra algum problema na consulta
     }
 
-    public void inserirPalavra(Palavra palavraCadastrada) throws SQLException {
-        String query = "INSERT INTO palavra (palavra, dificuldade) VALUES (?, ?)"; // Query para inserir uma nova palavra
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, palavraCadastrada.getPalavra());
-        statement.setString(2, palavraCadastrada.getDificuldade().getDescricao());
-        statement.executeUpdate();
+    @Override
+    public void inserir(Object obj) throws Exception {
+        if (obj!=null && obj instanceof Palavra){
+            Palavra palavraCadastrada = (Palavra)obj;
+            String query = "INSERT INTO palavra (palavra, dificuldade) VALUES (?, ?)"; // Query para inserir uma nova palavra
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, palavraCadastrada.getPalavra());
+            statement.setString(2, palavraCadastrada.getDificuldade().getDescricao());
+            statement.executeUpdate();
+        }
+        
     } 
 
    

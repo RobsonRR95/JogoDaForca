@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  *
  * @author santo
  */
-public class UsuarioDAO {
+public class UsuarioDAO implements DAO{
     private Connection connection;
     
     // Puxa a conexão com o BD
@@ -26,32 +26,42 @@ public class UsuarioDAO {
         this.connection = connection;
     }
 
-    public UsuarioDAO(com.sun.jdi.connect.spi.Connection connection) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+//    public UsuarioDAO(com.sun.jdi.connect.spi.Connection connection) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
     // Recebe os dados para criação de um novo usuário
-    public void inserirUsuario(Usuario usuario) throws SQLException {
-        String query = "INSERT INTO usuario (nome, senha, tipo, pontuacao) VALUES (?, ?, ?, 0)"; // Query para inserir um novo usuário
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, usuario.getNome());
-        statement.setString(2, usuario.getSenha());
-        statement.setInt(3, usuario.getTipo());
-        statement.executeUpdate();
+    @Override
+    public void inserir(Object obj) throws SQLException {
+        if (obj!=null && obj instanceof Usuario){
+            Usuario usuario = (Usuario)obj;
+            String query = "INSERT INTO usuario (nome, senha, tipo, pontuacao) VALUES (?, ?, ?, 0)"; // Query para inserir um novo usuário
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, usuario.getNome());
+            statement.setString(2, usuario.getSenha());
+            statement.setInt(3, usuario.getTipo());
+            statement.executeUpdate();
+            }
+        
     } 
     
 
 
-    public boolean existeUsuario(String nome) throws SQLException {
-        String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setString(1, nome);
-        ResultSet resultSet = statement.executeQuery();
+    @Override
+    public boolean existe(Object obj) throws Exception {
+        if (obj!=null && obj instanceof String){
+            String nome = (String)obj;
+            String query = "SELECT COUNT(*) FROM usuario WHERE nome = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nome);
+            ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            int count = resultSet.getInt(1);
-            return count > 0; // Retorna true se já existe um usuário com o mesmo nome
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retorna true se já existe um usuário com o mesmo nome
+            }
         }
+        
 
         return false; // Caso ocorra algum problema na consulta
     }
