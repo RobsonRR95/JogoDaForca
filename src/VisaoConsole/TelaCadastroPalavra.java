@@ -213,7 +213,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
             dificuldade = EnumDificuldade.D;
         }
         
-        if(palavra.equals("") || dica.equals(" ")){ // Verifica se o campo palavra esta preenchidos
+        if(palavra.equals("") || dica.equals("")){ // Verifica se o campo palavra esta preenchidos
             JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
         }
         else{
