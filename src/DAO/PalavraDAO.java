@@ -22,7 +22,7 @@ public class PalavraDAO implements DAO{
         this.connection = connection;
     }
     
-    public ArrayList<String> recuperar(int id) throws SQLException {
+    public ArrayList<String> recuperar(int id) throws Exception {
         String query = "SELECT * FROM palavra WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, id);
@@ -42,7 +42,7 @@ public class PalavraDAO implements DAO{
         return letras;
     }
     
-    public String recuperarDificuldade(int id) throws SQLException {
+    public String recuperarDificuldade(int id) throws Exception {
         String query = "SELECT dificuldade FROM palavra WHERE id = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, id);
@@ -59,7 +59,8 @@ public class PalavraDAO implements DAO{
         return dificuldade;
     }
     
-    public int getIdAleatorio() throws SQLException{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
+    public int getIdAleatorio() throws Exception{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
+        try{    
             String sql = "SELECT MAX(id) FROM palavra";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet resultSet = statement.executeQuery();
@@ -76,6 +77,11 @@ public class PalavraDAO implements DAO{
                 int idAleatorio = random.nextInt(maxId - minId + 1) + 301;
                 return idAleatorio;
             }
+        }catch(SQLException e){
+            e.printStackTrace(); // Exibe o erro de conexão do BD no output
+        }catch(Exception e){
+            e.printStackTrace(); // Exibe o erro 
+        }
             return 0;
     }
 

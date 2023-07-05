@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
 import Modelo.Usuario;
@@ -25,7 +21,7 @@ public class UsuarioDAO implements DAO{
     
     // Recebe os dados para criação de um novo usuário
     @Override
-    public void inserir(Object obj) throws SQLException {
+    public void inserir(Object obj) throws Exception {
         if (obj!=null && obj instanceof Usuario){
             Usuario usuario = (Usuario)obj;
             String query = "INSERT INTO usuario (nome, senha, tipo, pontuacao) VALUES (?, ?, ?, 0)"; // Query para inserir um novo usuário
@@ -70,7 +66,7 @@ public class UsuarioDAO implements DAO{
         return false; // Caso ocorra algum problema na consulta
     }
 
-    public Usuario recuperar(String nome) throws SQLException{
+    public Usuario recuperar(String nome) throws Exception{
         String query = "SELECT * FROM usuario WHERE nome = ?";
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, nome);
@@ -100,7 +96,7 @@ public class UsuarioDAO implements DAO{
         return rowsAffected > 0; // Retorna true se alguma linha foi afetada (usuário excluído com sucesso)
     }
 
-    public boolean loginUsuario(String nome, String senha) throws SQLException{
+    public boolean loginUsuario(String nome, String senha) throws Exception{
         String query = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
 
         try(PreparedStatement statement = connection.prepareStatement(query)){
@@ -111,6 +107,9 @@ public class UsuarioDAO implements DAO{
         }
         catch(SQLException e){
             e.printStackTrace(); // Exibe o erro de conexão do BD no output
+        }
+        catch(Exception e){
+            e.printStackTrace(); // Exibe o erro 
         }
         return false;
     }
@@ -147,6 +146,8 @@ public class UsuarioDAO implements DAO{
             statement.close();
             connection.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -4,10 +4,8 @@
  */
 package VisaoConsole;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,7 +110,7 @@ public class TelaInicial extends javax.swing.JFrame {
         TelaLogin telaLogin = null;
         try {
             telaLogin = new TelaLogin();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
         }
         telaLogin.setVisible(true);
@@ -127,7 +125,7 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

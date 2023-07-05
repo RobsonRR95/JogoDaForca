@@ -36,7 +36,7 @@ public class TelaJogar extends javax.swing.JFrame {
     private ArrayList<String> letrasUsadas = new ArrayList<>(); // Criado para exibir as letras usadas
     private StringBuilder stringBuilder = new StringBuilder(); // Constrói a String para o jogo
     private String letra; 
-    private final String dificuldade;
+    private String dificuldade = null;
     private final String nickname;
     
     
@@ -51,7 +51,7 @@ public class TelaJogar extends javax.swing.JFrame {
         try {
             idAleatorio = palavraDAO.getIdAleatorio();
             System.out.println("ID aleatório: " + idAleatorio);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             // Lida com a exceção SQLException aqui
             e.printStackTrace();
         }
@@ -64,7 +64,7 @@ public class TelaJogar extends javax.swing.JFrame {
                 tracos.add("_ ");
                 i++;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             // Lida com a exceção SQLException aqui
             e.printStackTrace();
         }
@@ -86,19 +86,22 @@ public class TelaJogar extends javax.swing.JFrame {
             }
         });
 
-        // Pega a dificuldade da palavra para calcular a pontuação
-        dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
-        labelDificuldade.setText(dificuldade);
+        try {
+            // Pega a dificuldade da palavra para calcular a pontuação
+            dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
+            labelDificuldade.setText(dificuldade);
         
-        // Faz o cálculo da pontuação
-        if (dificuldade.equals("Facil")) {
-            labelPontuacao.setText("10 pontos + Tentativas Restantes");
-        } else if (dificuldade.equals("Medio")) {
-            labelPontuacao.setText("15 pontos + Tentativas Restantes");
-        } else {
-            labelPontuacao.setText("20 pontos + Tentativas Restantes");
+            // Faz o cálculo da pontuação
+            if (dificuldade.equals("Facil")) {
+                labelPontuacao.setText("10 pontos + Tentativas Restantes");
+            } else if (dificuldade.equals("Medio")) {
+                labelPontuacao.setText("15 pontos + Tentativas Restantes");
+            } else {
+                labelPontuacao.setText("20 pontos + Tentativas Restantes");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
         AbstractDocument doc = (AbstractDocument) textLetra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
@@ -340,45 +343,7 @@ public class TelaJogar extends javax.swing.JFrame {
     }//GEN-LAST:event_textLetraActionPerformed
     
     
-    
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    new TelaJogar().setVisible(true);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-//    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDesistir;
