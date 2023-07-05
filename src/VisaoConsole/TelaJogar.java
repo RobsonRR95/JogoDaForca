@@ -35,9 +35,9 @@ public class TelaJogar extends javax.swing.JFrame {
     private ArrayList<String> tracos; // Criado para exibir os traços que serão substituídos
     private ArrayList<String> letrasUsadas = new ArrayList<>(); // Criado para exibir as letras usadas
     private StringBuilder stringBuilder = new StringBuilder(); // Constrói a String para o jogo
-    private String letra; 
-    private final String dificuldade;
-    private final String nickname;
+    private String letra; // Criada para pegar a letra que o usuário digitou e fazer as verificações
+    private final String dificuldade; // Criada para receber a dificuldade
+    private final String nickname; // Criada para salvar o nickname do usuário que está jogando
     
     
     public TelaJogar(String nick) throws SQLException {
@@ -321,7 +321,7 @@ public class TelaJogar extends javax.swing.JFrame {
                 Object[] options = {"Menu Inicial"};
                 int result = JOptionPane.showOptionDialog(this, "Suas tentativas acabaram 💔", "Derrota", JOptionPane.DEFAULT_OPTION, JOptionPane.DEFAULT_OPTION, null, options, options[0]);
                 if (result == JOptionPane.OK_OPTION) {
-                    dispose();
+                    dispose(); // Joga a tela fora
                 }
             }
         } catch (Exception ex) {
@@ -339,47 +339,6 @@ public class TelaJogar extends javax.swing.JFrame {
         // Criado sem querer
     }//GEN-LAST:event_textLetraActionPerformed
     
-    
-    
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TelaJogar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//                    new TelaJogar().setVisible(true);
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(TelaJogar.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDesistir;
     private javax.swing.JButton btEnviar;
