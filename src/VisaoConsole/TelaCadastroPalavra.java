@@ -44,6 +44,18 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                 }
             }
         });
+        
+        AbstractDocument doc2 = (AbstractDocument) textDica.getDocument();
+        doc2.setDocumentFilter(new DocumentFilter() {
+            @Override
+            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                // Valida se o texto inserido é uma letra e tem apenas um caractere, sem espaços
+                if (text.matches("[a-zA-Z]") && !text.contains(" ")) {
+                    // Permite a substituição do texto
+                    super.replace(fb, offset, length, text, attrs);
+                }
+            }
+        });
 
     }
 
@@ -64,6 +76,8 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
         selectDificuldade = new javax.swing.JComboBox<>();
         btCadastrar = new javax.swing.JToggleButton();
         btCancelar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        textDica = new javax.swing.JTextField();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -96,11 +110,13 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setText("Dica:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(153, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -112,13 +128,19 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                             .addGap(18, 18, 18)
                             .addComponent(selectDificuldade, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(textPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(btCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel4))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(textDica))
+                                .addComponent(textPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(142, 142, 142))
         );
         jPanel1Layout.setVerticalGroup(
@@ -132,13 +154,17 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                     .addComponent(textPalavra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(textDica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(selectDificuldade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCadastrar)
                     .addComponent(btCancelar))
-                .addContainerGap(133, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,6 +199,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
         }
         
         String palavra = textPalavra.getText().toUpperCase();
+        String dica = textDica.getText(); // .substring(0, 1).toUpperCase().substring(1).toLowerCase(); // Teste para padronizar palavra
         String combo = (String) selectDificuldade.getSelectedItem(); // Faz o cast da seleção para String
         
         EnumDificuldade dificuldade;
@@ -186,8 +213,8 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
             dificuldade = EnumDificuldade.D;
         }
         
-        if(palavra.equals("")){ // Verifica se o campo palavra esta preenchidos
-            JOptionPane.showMessageDialog(this, "Preencha o campo palavra!");
+        if(palavra.equals("") || dica.equals(" ")){ // Verifica se o campo palavra esta preenchidos
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
         }
         else{
             // Chamar o método inserirUsuario passando o objeto Usuario como argumento
@@ -199,7 +226,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Palavra já cadastrada! Escolha outra.");
                 }
                 else{ // Se a palavra não existir, cadastra a palavra
-                    Palavra palavraCadastrada = new Palavra(palavra, dificuldade);
+                    Palavra palavraCadastrada = new Palavra(palavra, dificuldade, dica);
                     
                 
                     try {
@@ -226,8 +253,10 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JComboBox<String> selectDificuldade;
+    private javax.swing.JTextField textDica;
     private javax.swing.JTextField textPalavra;
     // End of variables declaration//GEN-END:variables
 }

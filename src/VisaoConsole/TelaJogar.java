@@ -35,8 +35,9 @@ public class TelaJogar extends javax.swing.JFrame {
     private ArrayList<String> tracos; // Criado para exibir os traços que serão substituídos
     private ArrayList<String> letrasUsadas = new ArrayList<>(); // Criado para exibir as letras usadas
     private StringBuilder stringBuilder = new StringBuilder(); // Constrói a String para o jogo
-    private String letra; 
+    private String letra = null; 
     private String dificuldade = null;
+    private String dica = null;
     private final String nickname;
     
     
@@ -89,7 +90,9 @@ public class TelaJogar extends javax.swing.JFrame {
         try {
             // Pega a dificuldade da palavra para calcular a pontuação
             dificuldade = palavraDAO.recuperarDificuldade(idAleatorio);
+            dica = palavraDAO.recuperarDica(idAleatorio);
             labelDificuldade.setText(dificuldade);
+            labelDica.setText(dica);
         
             // Faz o cálculo da pontuação
             if (dificuldade.equals("Facil")) {
@@ -139,6 +142,8 @@ public class TelaJogar extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         labelDificuldade = new javax.swing.JLabel();
         labelLetrasUsadas = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        labelDica = new javax.swing.JLabel();
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
@@ -179,6 +184,8 @@ public class TelaJogar extends javax.swing.JFrame {
 
         labelLetrasUsadas.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
 
+        jLabel5.setText("Dica:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -200,13 +207,15 @@ public class TelaJogar extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(textLetra, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(labelTentativas)
                                     .addComponent(labelPontuacao)
-                                    .addComponent(labelDificuldade))))
+                                    .addComponent(labelDificuldade)
+                                    .addComponent(labelDica))))
                         .addGap(157, 157, 157))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(173, 173, 173)
@@ -222,7 +231,11 @@ public class TelaJogar extends javax.swing.JFrame {
                 .addComponent(labelLetrasUsadas)
                 .addGap(18, 18, 18)
                 .addComponent(labelPalavraSecreta)
-                .addGap(31, 31, 31)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(labelDica))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(labelDificuldade))
@@ -240,7 +253,7 @@ public class TelaJogar extends javax.swing.JFrame {
                     .addComponent(textLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btEnviar)
-                .addGap(43, 43, 43))
+                .addGap(21, 21, 21))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -352,7 +365,9 @@ public class TelaJogar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelDica;
     private javax.swing.JLabel labelDificuldade;
     private javax.swing.JLabel labelLetrasUsadas;
     private javax.swing.JLabel labelPalavraSecreta;

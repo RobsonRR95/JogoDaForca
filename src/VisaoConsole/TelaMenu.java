@@ -51,35 +51,35 @@ public class TelaMenu extends javax.swing.JFrame {
 
         jLabel1.setText("Menu Inicial");
 
-        btJogar.setText("Jogar");
+        btJogar.setText("Jogar 🎮");
         btJogar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btJogarActionPerformed(evt);
             }
         });
 
-        btCadastroUsuario.setText("Cadastrar Usuário");
+        btCadastroUsuario.setText("Cadastrar Usuário 💾");
         btCadastroUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastroUsuarioActionPerformed(evt);
             }
         });
 
-        btCadastroPalavra.setText("Cadastrar Palavra");
+        btCadastroPalavra.setText("Cadastrar Palavra 💾");
         btCadastroPalavra.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCadastroPalavraActionPerformed(evt);
             }
         });
 
-        btListaJogadores.setText("Ranking");
+        btListaJogadores.setText("Ranking 🏆");
         btListaJogadores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btListaJogadoresActionPerformed(evt);
             }
         });
 
-        btExcluir.setText("Excluir Usuário");
+        btExcluir.setText("Excluir Usuário 🚮");
         btExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btExcluirActionPerformed(evt);

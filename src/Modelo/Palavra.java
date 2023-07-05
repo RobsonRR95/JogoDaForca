@@ -7,12 +7,13 @@ import java.util.Objects;
 
 
 public class Palavra {
-    private String palavra;
+    private String palavra, dica;
     private EnumDificuldade dificuldade;
 
-    public Palavra(String palavra, EnumDificuldade dificuldade) {
+    public Palavra(String palavra, EnumDificuldade dificuldade, String dica) {
         this.palavra = palavra;
         this.dificuldade = dificuldade;
+        this.dica = dica;
     }
 
     public Palavra() {
@@ -33,6 +34,14 @@ public class Palavra {
 
     public void setDificuldade(EnumDificuldade dificuldade) {
         this.dificuldade = dificuldade;
+    }
+    
+    public String getDica() {
+        return dica;
+    }
+    
+    public void setDica(String dica){
+        this.dica = dica;
     }
 
     @Override

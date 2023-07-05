@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.8" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
   </Properties>
@@ -84,7 +84,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btJogar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Jogar"/>
+            <Property name="text" type="java.lang.String" value="Jogar \ud83c\udfae" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btJogarActionPerformed"/>
@@ -92,7 +92,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btCadastroUsuario">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastrar Usu&#xe1;rio"/>
+            <Property name="text" type="java.lang.String" value="Cadastrar Usu&#xe1;rio \ud83d\udcbe" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCadastroUsuarioActionPerformed"/>
@@ -100,7 +100,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btCadastroPalavra">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cadastrar Palavra"/>
+            <Property name="text" type="java.lang.String" value="Cadastrar Palavra \ud83d\udcbe" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCadastroPalavraActionPerformed"/>
@@ -108,7 +108,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btListaJogadores">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ranking"/>
+            <Property name="text" type="java.lang.String" value="Ranking \ud83c\udfc6" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btListaJogadoresActionPerformed"/>
@@ -116,7 +116,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btExcluir">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Excluir Usu&#xe1;rio"/>
+            <Property name="text" type="java.lang.String" value="Excluir Usu&#xe1;rio \ud83d\udeae" containsInvalidXMLChars="true"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btExcluirActionPerformed"/>

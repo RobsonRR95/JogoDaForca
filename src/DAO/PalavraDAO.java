@@ -59,6 +59,23 @@ public class PalavraDAO implements DAO{
         return dificuldade;
     }
     
+        public String recuperarDica(int id) throws Exception {
+        String query = "SELECT dica FROM palavra WHERE id = ?";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+
+        String dica = null;
+
+        // Verifica se houve retorno
+        if (resultSet.next()) {
+            dica = resultSet.getString("dica");
+        }
+
+        // Se não houver retorno, dificuldade será null
+        return dica;
+    }
+    
     public int getIdAleatorio() throws Exception{ // Retorna um ID aleatório para escolher a palavra que inicia o jogo
         try{    
             String sql = "SELECT MAX(id) FROM palavra";
@@ -141,10 +158,11 @@ public class PalavraDAO implements DAO{
     public void inserir(Object obj) throws Exception {
         if (obj!=null && obj instanceof Palavra){
             Palavra palavraCadastrada = (Palavra)obj;
-            String query = "INSERT INTO palavra (palavra, dificuldade) VALUES (?, ?)"; // Query para inserir uma nova palavra
+            String query = "INSERT INTO palavra (palavra, dificuldade, dica) VALUES (?, ?, ?)"; // Query para inserir uma nova palavra
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, palavraCadastrada.getPalavra());
             statement.setString(2, palavraCadastrada.getDificuldade().getDescricao());
+            statement.setString(3, palavraCadastrada.getDica());
             statement.executeUpdate();
         }
         
