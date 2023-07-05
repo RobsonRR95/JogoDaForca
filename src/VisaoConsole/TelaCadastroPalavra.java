@@ -31,19 +31,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
      */
     public TelaCadastroPalavra() {
         initComponents();
-        
-//        // Adicionar o DocumentFilter ao textLetra para que não possa digitar mais de um caracter e nem caracteres diferente de a-z
-//        AbstractDocument doc = (AbstractDocument) textPalavra.getDocument();
-//        doc.setDocumentFilter(new DocumentFilter() {
-//            @Override
-//            public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-//                // Valida se o texto inserido é uma letra e tem só um caracter
-//                if (text.matches("[a-zA-Z]")) {
-//                    // Permite a substituição do texto
-//                    super.replace(fb, offset, length, text, attrs);
-//                }
-//            }
-//        });
+
 
         AbstractDocument doc = (AbstractDocument) textPalavra.getDocument();
         doc.setDocumentFilter(new DocumentFilter() {
@@ -230,40 +218,7 @@ public class TelaCadastroPalavra extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btCadastrarActionPerformed
 
-////    /**
-////     * @param args the command line arguments
-////     */
-////    public static void main(String args[]) {
-////        /* Set the Nimbus look and feel */
-////        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-////        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-////         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-////         */
-////        try {
-////            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-////                if ("Nimbus".equals(info.getName())) {
-////                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-////                    break;
-////                }
-////            }
-////        } catch (ClassNotFoundException ex) {
-////            java.util.logging.Logger.getLogger(TelaCadastroPalavra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-////        } catch (InstantiationException ex) {
-////            java.util.logging.Logger.getLogger(TelaCadastroPalavra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-////        } catch (IllegalAccessException ex) {
-////            java.util.logging.Logger.getLogger(TelaCadastroPalavra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-////        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-////            java.util.logging.Logger.getLogger(TelaCadastroPalavra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-////        }
-////        //</editor-fold>
-////
-////        /* Create and display the form */
-////        java.awt.EventQueue.invokeLater(new Runnable() {
-////            public void run() {
-////                new TelaCadastroPalavra().setVisible(true);
-////            }
-////        });
-////    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btCadastrar;
