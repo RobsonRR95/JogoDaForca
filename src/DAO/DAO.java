@@ -3,7 +3,7 @@ package DAO;
 
 /**
  *
- * @author Robson Rosa
+ * @author Robson R Rosa 
  */
 interface DAO {
     public boolean existe(Object obj)throws Exception; // pesquisar
